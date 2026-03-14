@@ -32,11 +32,10 @@ export function Home() {
   return (
     <div className="home-container">
       {/* Hero Section */}
-      <section className="hero-section">
-        <div className="hero-background">
-          <div className="gradient-overlay"></div>
-        </div>
-        
+      <section className="hero-section"> 
+        <div className="hero-background"></div>
+        <div className="gradient-overlay"></div>
+         
         <div className="hero-content">
           <div className="hero-badge">
             <span>Established 2017</span>
@@ -63,7 +62,6 @@ export function Home() {
             </Link>
           </div>
         </div>
-
       </section>
 
       {/* Introduction */}
@@ -176,29 +174,6 @@ export function Home() {
             <div className="testimonial-author">
               <div className="author-name">{testimonials[0].author}</div>
               <div className="author-role">{testimonials[0].role}</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="cta-section">
-        <div className="container">
-          <div className="cta-content">
-            <h2 className="cta-title">Ready to Start Your Project?</h2>
-            <p className="cta-description">
-              Contact us for expert quantity surveying services that deliver 
-              exceptional results and outstanding value.
-            </p>
-            <div className="cta-actions">
-              <Link to="/contact" className="primary-button">
-                Get Started
-                <ArrowRight size={18} />
-              </Link>
-              <Link to="tel:+27112345678" className="secondary-button">
-                <Phone size={16} />
-                Call Now
-              </Link>
             </div>
           </div>
         </div>
