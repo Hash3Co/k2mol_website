@@ -1,185 +1,188 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+// ExperiencePage.jsx
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { 
-  Building2, Users, Target, Award, ChevronRight, 
-  CheckCircle, Clock, TrendingUp, Shield, Star
+  Briefcase, Users, CheckCircle, Clock, 
+  ArrowRight, Star, Award, TrendingUp 
 } from 'lucide-react';
+import { ProjectPage } from './ProjectsPage'; // Your existing component
+import { ClientPage } from './ClientPage'; // Import your Clients page component
 
 export function ExperiencePage() {
-  const [activeHover, setActiveHover] = useState(null);
-  const [counter, setCounter] = useState({ projects: 0, clients: 0 });
-
-  useEffect(() => {
-    // Animated counters
-    const interval = setInterval(() => {
-      setCounter(prev => ({
-        projects: prev.projects < 50 ? prev.projects + 1 : 50,
-        clients: prev.clients < 30 ? prev.clients + 1 : 30
-      }));
-    }, 30);
-
-    return () => clearInterval(interval);
-  }, []);
-
- 
-
-  const projectHighlights = [
-    "Commercial Complex Development",
-    "Healthcare Facility Construction",
-    "Residential Tower Projects",
-    "Infrastructure Development",
-  ];
-
-  const clientHighlights = [
-    "Government Agencies",
-    "Private Developers",
-    "Construction Firms",
-    "Healthcare Providers",
-  ];
+  const navigate = useNavigate();
+  const [activeSection, setActiveSection] = useState('projects'); // 'projects' or 'clients'
 
   return (
     <div className="experience-page">
-      {/* Background Elements */}
+      {/* Background Elements - already in your CSS */}
       <div className="experience-background">
         <div className="bg-gradient"></div>
         <div className="bg-pattern"></div>
       </div>
 
-      {/* Header */}
+      {/* Header Section */}
       <div className="experience-header">
         <div className="header-badge">
-          <span>Our Portfolio</span>
+          <span>Our Track Record</span>
         </div>
         <h1 className="experience-title">
-          Proven <span className="highlight">Experience</span> in Excellence
+          Years of <span className="highlight">Excellence</span>
         </h1>
         <p className="experience-subtitle">
-          Explore our comprehensive portfolio of successful projects and valued client partnerships
+          Delivering exceptional construction and consulting services worldwide
         </p>
       </div>
 
-      {/* Main Action Cards */}
+      {/* Metrics Bar - already styled in your CSS */}
+      <div className="metrics-bar">
+        <div className="metric-item">
+          <div className="metric-icon"><Briefcase /></div>
+          <div className="metric-content">
+            <div className="metric-value">150+</div>
+            <div className="metric-label">Projects Completed</div>
+          </div>
+        </div>
+        <div className="metric-item">
+          <div className="metric-icon"><Users /></div>
+          <div className="metric-content">
+            <div className="metric-value">85+</div>
+            <div className="metric-label">Happy Clients</div>
+          </div>
+        </div>
+        <div className="metric-item">
+          <div className="metric-icon"><Clock /></div>
+          <div className="metric-content">
+            <div className="metric-value">12+</div>
+            <div className="metric-label">Years Experience</div>
+          </div>
+        </div>
+        <div className="metric-item">
+          <div className="metric-icon"><TrendingUp /></div>
+          <div className="metric-content">
+            <div className="metric-value">98%</div>
+            <div className="metric-label">Success Rate</div>
+          </div>
+        </div>
+      </div>
+
+      {/* Toggle Cards for Projects/Clients */}
       <div className="experience-cards">
         {/* Projects Card */}
         <div 
-          className={`action-card ${activeHover === 'projects' ? 'active' : ''}`}
-          onMouseEnter={() => setActiveHover('projects')}
-          onMouseLeave={() => setActiveHover(null)}
+          className={`action-card ${activeSection === 'projects' ? 'active' : ''}`}
+          onClick={() => setActiveSection('projects')}
         >
           <div className="card-background projects-bg"></div>
-          
           <div className="card-header">
-            <div className="card-icon">
-              <Building2 size={32} />
-            </div>
+            <div className="card-icon"><Briefcase /></div>
             <div className="card-counter">
-              <span className="counter-number">{counter.projects}+</span>
+              <span className="counter-number">150+</span>
               <span className="counter-label">Projects</span>
             </div>
           </div>
-
           <div className="card-content">
-            <h2 className="card-title">Our Work Portfolio</h2>
+            <h2 className="card-title">Our Projects</h2>
             <p className="card-description">
-              Discover our successful infrastructure and construction projects delivered with precision and excellence
+              Innovative construction and development projects worldwide
             </p>
-            
             <div className="card-highlights">
-              <h3>Project Highlights</h3>
+              <h3>Project Excellence:</h3>
               <div className="highlight-list">
-                {projectHighlights.map((highlight, index) => (
-                  <div key={index} className="highlight-item">
-                    <ChevronRight size={16} />
-                    <span>{highlight}</span>
-                  </div>
-                ))}
+                <div className="highlight-item"><Award /> Award-Winning Designs</div>
+                <div className="highlight-item"><CheckCircle /> On-Time Delivery</div>
+                <div className="highlight-item"><TrendingUp /> Sustainable Solutions</div>
               </div>
             </div>
-
-            <Link to="/projects" className="card-button">
-              Explore Projects
-              <ChevronRight size={18} />
-            </Link>
           </div>
-
-          <div className="card-ribbon">Featured</div>
+          {activeSection === 'projects' && (
+            <div className="card-ribbon">Active</div>
+          )}
         </div>
-
+        
         {/* Clients Card */}
         <div 
-          className={`action-card ${activeHover === 'clients' ? 'active' : ''}`}
-          onMouseEnter={() => setActiveHover('clients')}
-          onMouseLeave={() => setActiveHover(null)}
+          className={`action-card ${activeSection === 'clients' ? 'active' : ''}`}
+          onClick={() => setActiveSection('clients')}
         >
           <div className="card-background clients-bg"></div>
-          
           <div className="card-header">
-            <div className="card-icon">
-              <Users size={32} />
-            </div>
+            <div className="card-icon"><Users /></div>
             <div className="card-counter">
-              <span className="counter-number">{counter.clients}+</span>
+              <span className="counter-number">85+</span>
               <span className="counter-label">Clients</span>
             </div>
           </div>
-
           <div className="card-content">
-            <h2 className="card-title">Our Valued Clients</h2>
+            <h2 className="card-title">Our Clients</h2>
             <p className="card-description">
-              Meet the organizations and partners who trust our expertise for their construction and development needs
+              Trusted by industry leaders across multiple sectors
             </p>
-            
             <div className="card-highlights">
-              <h3>Client Sectors</h3>
+              <h3>Client Success:</h3>
               <div className="highlight-list">
-                {clientHighlights.map((highlight, index) => (
-                  <div key={index} className="highlight-item">
-                    <ChevronRight size={16} />
-                    <span>{highlight}</span>
-                  </div>
-                ))}
+                <div className="highlight-item"><Star /> Fortune 500 Companies</div>
+                <div className="highlight-item"><Star /> Government Contracts</div>
+                <div className="highlight-item"><Star /> International Partners</div>
               </div>
             </div>
-
-            <Link to="/clients" className="card-button">
-              View Clients
-              <ChevronRight size={18} />
-            </Link>
           </div>
+          {activeSection === 'clients' && (
+            <div className="card-ribbon">Active</div>
+          )}
         </div>
       </div>
 
-      {/* Value Proposition */}
-      <div className="value-proposition">
-        <div className="value-content">
-          <div className="value-header">
-            <div className="value-badge">
-              <Target size={20} />
-              <span>Our Methodology</span>
-            </div>
-            <h2 className="value-title">Comprehensive Consulting Experience</h2>
-          </div>
-          
-          <p className="value-text">
-            With years of industry experience, we've developed a proven methodology that delivers 
-            exceptional results through strategic planning, precise execution, and continuous innovation.
-          </p>
-        </div>
-        
-        <div className="value-stats">
-          <div className="stat-bubble">
-            <div className="bubble-content">
-              <div className="bubble-icon">
-                <Star size={24} />
-              </div>
-              <div className="bubble-text">
-                <div className="bubble-value">98%</div>
-                <div className="bubble-label">Client Satisfaction</div>
+      {/* Dynamic Content Section */}
+      <div className="dynamic-content">
+        {activeSection === 'projects' ? (
+          <>
+            {/* Your ProjectPage component rendered here */}
+            <ProjectPage />
+            
+            {/* Navigation Button to dedicated projects page */}
+            <div className="experience-cta">
+              <div className="cta-content">
+                <h3 className="cta-title">Explore Our Portfolio</h3>
+                <p className="cta-description">
+                  Discover all our completed and ongoing projects
+                </p>
+                <div className="cta-actions">
+                  <button 
+                    className="cta-button primary"
+                    onClick={() => navigate('/projects')}
+                  >
+                    View All Projects <ArrowRight />
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
+          </>
+        ) : (
+          <>
+            {/* Your ClientsPage component rendered here */}
+            <ClientPage />
+            
+            {/* Navigation Button to dedicated clients page */}
+            <div className="experience-cta">
+              <div className="cta-content">
+                <h3 className="cta-title">Our Valued Partners</h3>
+                <p className="cta-description">
+                  See all the companies that trust our services
+                </p>
+                <div className="cta-actions">
+                  <button 
+                    className="cta-button primary"
+                    onClick={() => navigate('/clients')}
+                  >
+                    View All Clients <ArrowRight />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
       </div>
+
     </div>
   );
 }

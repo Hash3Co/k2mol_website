@@ -3,10 +3,10 @@ import { NavLink } from 'react-router-dom';
 import { Menu, Phone, X } from 'lucide-react';
 import logo from '../../assets/images/K2M_Logo.png';
 
-import image1 from '../../assets/images/slider/pexels-enginakyurt-2036686.jpg';
-import image2 from '../../assets/images/slider/pexels-kawserhamid-176342.jpg';
-import image3 from '../../assets/images/slider/pexels-umaraffan499-190417.jpg';
-import image4 from '../../assets/images/slider/pexels-yury-kim-181374-585418.jpg'
+import image1 from '../../assets/images/slider/IMG-20250620-WA0022.jpg';
+import image2 from '../../assets/images/slider/IMG-20250620-WA0024.jpg';
+import image3 from '../../assets/images/slider/IMG-20250620-WA0036.jpg';
+import image4 from '../../assets/images/slider/IMG-20250620-WA0043.jpg';
 
 
 export function ImageSlider  ({  interval = 5000 }) {
