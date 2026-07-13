@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Phone, Mail, MapPin } from 'lucide-react';
-import logo from '../../assets/images/K2M_Logo.png';
+import logo from '../../assets/images/K2M_Logo.jpg';
 
 export function Footer() {
   return (

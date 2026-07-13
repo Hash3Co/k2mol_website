@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Menu, Phone, X } from 'lucide-react';
-import logo from '../../assets/images/K2M_Logo.png';
+import logo from '../../assets/images/K2M_Logo.jpg';
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);

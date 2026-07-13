@@ -1,7 +1,6 @@
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
-import {  Footer, SponsorBand, ImageSlider } from "./components/layout";
+import { Footer, SponsorBand, ImageSlider } from "./components/layout";
 import { Home, ProjectPage, AboutPage, ContactPage, ExperiencePage, ClientPage, ServicePage} from "./components/pages";
-
 
 export default function App() {
   return (
@@ -13,9 +12,9 @@ export default function App() {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/services" element={<ServicePage/>} />
           <Route path="/contact" element={<ContactPage />} />
-          <Route path="/Experience" element={<ExperiencePage />} />
+          <Route path="/experience" element={<ExperiencePage />} />
           <Route path="/projects" element={<ProjectPage/>} />
-          <Route path="/Clients" element={<ClientPage />} />
+          <Route path="/clients" element={<ClientPage />} />
         </Routes>
       </main>
       <SponsorBand />
