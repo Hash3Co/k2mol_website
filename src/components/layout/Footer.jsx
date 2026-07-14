@@ -4,6 +4,10 @@ import { Phone, Mail, MapPin } from 'lucide-react';
 import logo from '../../assets/images/K2M_Logo.jpg';
 
 export function Footer() {
+  // State to handle image loading errors
+  const [logoError, setLogoError] = React.useState(false);
+  const [logoLoaded, setLogoLoaded] = React.useState(false);
+
   return (
     <footer className="footer">
       <div className="footer-container">
@@ -11,11 +15,27 @@ export function Footer() {
           <div className="footer-section">
             <div className="footer-brand">
               <NavLink to="/" className="brand-link">
-                <img
-                  src={logo}
-                  alt="K2MOL Consulting"
-                  className="footer-logo"
-                />
+                {!logoError ? (
+                  <img
+                    src={logo}
+                    alt="K2MOL Consulting"
+                    className="footer-logo"
+                    loading="lazy"
+                    decoding="async"
+                    onError={() => setLogoError(true)}
+                    onLoad={() => setLogoLoaded(true)}
+                    style={{
+                      opacity: logoLoaded ? 1 : 0,
+                      transition: 'opacity 0.3s ease'
+                    }}
+                  />
+                ) : (
+                  // Fallback text when image fails to load
+                  <div className="footer-logo-fallback">
+                    <span className="fallback-text">K2MOL</span>
+                    <span className="fallback-subtext">Consulting</span>
+                  </div>
+                )}
               </NavLink>
             </div>
             <p>Competes with a strong national footprint delivering innovative solutions and strategic consulting services.</p>
@@ -67,8 +87,8 @@ export function Footer() {
               
               <div className="contact-item">
                 <Phone className="contact-icon" />
-                <a href="tel:+27112368630" className="contact-link">
-                  (011) 236-8630
+                <a href="tel:+27835529401" className="contact-link">
+                  (083) 552 9401 
                 </a>
               </div>
               
@@ -83,7 +103,7 @@ export function Footer() {
         </div>
         
         <div className="footer-copyright">
-          <p>&copy; {new Date().getFullYear()} Vireotech. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Hash & Co. All rights reserved.</p>
         </div>
       </div>
     </footer>

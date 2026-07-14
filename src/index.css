@@ -36,6 +36,71 @@
 }
 
 /* ==========================================================================
+   MOBILE STABILITY - CRITICAL FIXES
+   ========================================================================== */
+
+/* Prevent all overflow and crashes on mobile */
+html,
+body {
+  overflow-x: hidden;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+/* Mobile-specific image stability */
+@media (max-width: 768px) {
+  img,
+  video,
+  canvas {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* Prevent 3D transforms on mobile (causes crashes) */
+  * {
+    transform: none !important;
+  }
+  
+  /* Disable complex animations on mobile */
+  .bg-element,
+  .animated-bg,
+  .hero-badge::before,
+  .highlight,
+  .slide::before,
+  .slide::after {
+    animation: none !important;
+    opacity: 0 !important;
+    display: none !important;
+  }
+  
+  /* Simplify transitions on mobile */
+  * {
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+  }
+}
+
+/* Prevent image loading from breaking layout */
+img:not([src]),
+img[src=""],
+img[src="#"],
+img[src="about:blank"] {
+  opacity: 0;
+  min-height: 50px;
+  min-width: 50px;
+  background: transparent;
+}
+
+/* Safe area fallback for iOS */
+@supports (padding: env(safe-area-inset-bottom)) {
+  .footer {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* ==========================================================================
    BASE STYLES & TYPOGRAPHY
    ========================================================================== */
 
@@ -679,6 +744,7 @@ svg {
 .about-story {
   grid-column: span 1;
   min-width: 0; /* Prevents overflow */
+  padding-bottom: 1rem; /* Adds spacing below the story card */
 }
 
 .story-card {
@@ -689,6 +755,7 @@ svg {
   height: 100%;
   transition: all 0.3s ease;
   overflow: hidden; /* Prevents content overflow */
+  padding-bottom: 1rem;
 }
 
 .story-card:hover {
@@ -742,6 +809,7 @@ svg {
 .about-stats {
   grid-column: span 1;
   min-width: 0;
+  padding-bottom: 1rem; /* Adds spacing below the stats card */
 }
 
 .stats-grid {
@@ -749,6 +817,7 @@ svg {
   grid-template-columns: repeat(2, 1fr);
   gap: clamp(1rem, 2vw, 1.5rem);
   height: 100%;
+  padding-bottom: 1rem; /* Adds spacing below the stats grid */
 }
 
 .stat-item {
@@ -789,6 +858,7 @@ svg {
 .about-values {
   grid-column: span 1;
   min-width: 0;
+  padding-bottom: 1rem;
 }
 
 .values-card {
@@ -798,6 +868,7 @@ svg {
   padding: clamp(1.5rem, 2.5vw, 2rem);
   height: 100%;
   overflow: hidden;
+  padding-bottom: 1rem;
 }
 
 .value-item {
@@ -1243,7 +1314,7 @@ svg {
 
 
 /* ==========================================================================
-   FOOTER
+   FOOTER - STABLE VERSION
    ========================================================================== */
 
 .footer {
@@ -1251,6 +1322,10 @@ svg {
   color: var(--color-primary);
   padding: clamp(2rem, 4vw, 3rem) 0 clamp(1rem, 2vw, 1.5rem);
   margin-top: auto;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
 }
 
 .footer-container {
@@ -1259,12 +1334,53 @@ svg {
   padding: 0 clamp(1rem, 2vw, 1.5rem);
 }
 
+/* Brand link container - prevents layout shifts */
+.footer-brand {
+  display: flex;
+  align-items: center;
+  min-height: 120px;
+}
+
+.brand-link {
+  display: inline-block;
+  text-decoration: none;
+}
+
+/* Footer Logo - Optimized for stability */
 .footer-logo {
-  max-height: clamp(120px, 20vw, 200px);
-  max-width: clamp(150px, 25vw, 250px);
-  width: 100%;
+  max-height: clamp(80px, 15vw, 160px);
+  max-width: clamp(120px, 20vw, 220px);
+  width: auto;
   height: auto;
-  transition: color 0.3s ease;
+  display: block;
+  object-fit: contain;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+/* Fallback when image fails to load */
+.footer-logo-fallback {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0.5rem 0;
+}
+
+.fallback-text {
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  font-weight: 800;
+  color: var(--color-primary);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.fallback-subtext {
+  font-size: clamp(0.7rem, 1.25vw, 0.9rem);
+  color: var(--color-primary-light);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 300;
 }
 
 .footer-grid {
@@ -1276,7 +1392,7 @@ svg {
 
 .footer-section h3 {
   color: var(--color-primary);
-  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  font-size: clamp(1.1rem, 1.8vw, 1.4rem);
   font-weight: 700;
   margin-bottom: clamp(0.75rem, 1.5vw, 1rem);
   word-wrap: break-word;
@@ -1287,20 +1403,73 @@ svg {
 .contact-item address,
 .contact-link {
   color: var(--color-primary-light);
-  font-size: clamp(0.875rem, 1.25vw, 1rem);
+  font-size: clamp(0.85rem, 1.25vw, 1rem);
   line-height: 1.6;
+}
+
+.footer-section p {
+  max-width: 100%;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: clamp(0.375rem, 0.75vw, 0.5rem);
 }
 
 .footer-link {
   text-decoration: none;
   transition: all 0.3s ease;
   display: inline-block;
-  margin-bottom: clamp(0.375rem, 0.75vw, 0.5rem);
+  color: var(--color-primary-light);
 }
 
 .footer-link:hover {
   color: var(--color-primary);
   transform: translateX(5px);
+}
+
+/* Contact Items */
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.75rem, 1.5vw, 1rem);
+}
+
+.contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(0.75rem, 1.25vw, 1rem);
+}
+
+.contact-item address {
+  font-style: normal;
+  color: var(--color-primary-light);
+}
+
+.contact-icon {
+  width: clamp(18px, 2vw, 22px);
+  height: clamp(18px, 2vw, 22px);
+  color: var(--color-primary);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.contact-link {
+  color: var(--color-primary-light);
+  text-decoration: none;
+  transition: color 0.3s ease;
+  word-break: break-word;
+}
+
+.contact-link:hover {
+  color: var(--color-primary);
 }
 
 .footer-copyright {
@@ -1311,9 +1480,83 @@ svg {
 
 .footer-copyright p {
   color: var(--color-primary-light);
-  font-size: clamp(0.75rem, 1.25vw, 0.9rem);
+  font-size: clamp(0.7rem, 1.1vw, 0.85rem);
+  margin: 0;
 }
 
+/* ==========================================================================
+   FOOTER RESPONSIVE
+   ========================================================================== */
+
+/* Tablet */
+@media (min-width: 480px) {
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 768px) {
+  .footer {
+    padding: clamp(3rem, 5vw, 4rem) 0 clamp(1rem, 2vw, 1.5rem);
+  }
+  
+  .footer-grid {
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: clamp(2rem, 4vw, 3rem);
+  }
+  
+  .footer-brand {
+    min-height: 140px;
+  }
+}
+
+/* Mobile - CRITICAL FIXES */
+@media (max-width: 480px) {
+  .footer {
+    padding: 1.5rem 0 0.75rem;
+  }
+  
+  .footer-container {
+    padding: 0 1rem;
+  }
+  
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .footer-brand {
+    min-height: 80px;
+  }
+  
+  /* Fix for image loading on mobile */
+  .footer-logo {
+    max-height: 80px;
+    max-width: 140px;
+  }
+  
+  .brand-link {
+    display: inline-block;
+  }
+  
+  .footer-section {
+    padding: 0 0.25rem;
+  }
+  
+  .footer-section h3 {
+    font-size: 1rem;
+  }
+  
+  .contact-item {
+    gap: 0.5rem;
+  }
+  
+  .contact-icon {
+    width: 16px;
+    height: 16px;
+    margin-top: 1px;
+  }
+}
 /* ==========================================================================
    CTA SECTION
    ========================================================================== */
@@ -7184,36 +7427,3 @@ html {
     50% { opacity: 0.8; transform: scale(1.1); }
 }
 
-/* ==========================================================================
-   FOOTER LOGO - OPTIMIZED LOADING
-   ========================================================================== */
-
-.footer-logo {
-    max-height: clamp(120px, 20vw, 200px);
-    max-width: clamp(150px, 25vw, 250px);
-    width: 100%;
-    height: auto;
-    transition: color 0.3s ease;
-    /* Add loading optimization */
-    opacity: 0;
-    animation: logoFadeIn 0.5s ease forwards;
-}
-
-@keyframes logoFadeIn {
-    to { opacity: 1; }
-}
-
-/* Image loading placeholder */
-.footer-logo.loading {
-    background: linear-gradient(135deg, #1a1a1a 25%, #2a2a2a 50%, #1a1a1a 75%);
-    background-size: 200% 100%;
-    animation: shimmer 1.5s infinite;
-    min-height: 80px;
-    min-width: 150px;
-    border-radius: 4px;
-}
-
-@keyframes shimmer {
-    0% { background-position: -200% 0; }
-    100% { background-position: 200% 0; }
-}

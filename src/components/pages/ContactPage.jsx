@@ -17,9 +17,8 @@ export function ContactPage() {
 
   const handleSocialClick = (platform) => {
     const urls = {
-      linkedin: 'https://linkedin.com/company/your-company',
-      twitter: 'https://twitter.com/your-company',
-      website: 'https://your-company.com'
+      linkedin: 'https://www.linkedin.com/in/bafokeng-moleko-6baa7388/',
+      
     };
     window.open(urls[platform], '_blank');
   };
@@ -123,14 +122,14 @@ export function ContactPage() {
                     <h4 className="contact-page__info-heading">Call Us</h4>
                     <div className="contact-page__info-text">
                       <a 
-                        href="tel:+0112368630" 
+                        href="tel:+0115932000" 
                         className="contact-page__info-link"
                         onClick={(e) => {
                           e.preventDefault();
-                          handlePhoneClick('+0112368630');
+                          handlePhoneClick('+0115932000');
                         }}
                       >
-                        (011) 236-8630
+                        (011) 593-2000
                       </a>
                       <a 
                         href="tel:+0835529401" 
@@ -161,16 +160,6 @@ export function ContactPage() {
                   }}
                 >
                   <Linkedin className="contact-page__social-icon" />
-                </a>
-                <a 
-                  href="#" 
-                  className="contact-page__social-link"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleSocialClick('twitter');
-                  }}
-                >
-                  <Twitter className="contact-page__social-icon" />
                 </a>
                 
               </div>

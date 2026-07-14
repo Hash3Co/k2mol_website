@@ -38,7 +38,7 @@ export function ExperiencePage() {
         <div className="metric-item">
           <div className="metric-icon"><Briefcase /></div>
           <div className="metric-content">
-            <div className="metric-value">150+</div>
+            <div className="metric-value">80+</div>
             <div className="metric-label">Projects Completed</div>
           </div>
         </div>
@@ -76,7 +76,7 @@ export function ExperiencePage() {
           <div className="card-header">
             <div className="card-icon"><Briefcase /></div>
             <div className="card-counter">
-              <span className="counter-number">150+</span>
+              <span className="counter-number">80+</span>
               <span className="counter-label">Projects</span>
             </div>
           </div>

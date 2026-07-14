@@ -4,7 +4,7 @@ import { Menu, Phone, X } from 'lucide-react';
 
 // Home page images
 import homeImage1 from '../../assets/images/home/IMG-20260713-WA0082.jpg';
-import homeImage2 from '../../assets/images/home/IMG-20250620-WA0024.jpg';
+import homeImage2 from '../../assets/images/home/IMG-20260318-WA0012.jpg';
 import homeImage3 from '../../assets/images/home/IMG-20250620-WA0036.jpg';
 import homeImage4 from '../../assets/images/home/IMG-20260318-WA0020.jpg';
 
@@ -23,7 +23,7 @@ import servicesImage4 from '../../assets/images/services/IMG-20260318-WA0074.jpg
 // Experience page images (will also be used for Clients and Projects)
 import experienceImage1 from '../../assets/images/experience/IMG-20260713-WA0054.jpg';
 import experienceImage2 from '../../assets/images/experience/IMG-20260713-WA0044.jpg';
-import experienceImage3 from '../../assets/images/experience/IMG-20260713-WA0047.jpg';
+import experienceImage3 from '../../assets/images/experience/IMG-20260713-WA0077.jpg';
 import experienceImage4 from '../../assets/images/experience/IMG-20260713-WA0089.jpg';
 
 // Contact page images
@@ -149,9 +149,9 @@ export function ImageSlider({ interval = 5000 }) {
         </nav>
 
         <div className="header-actions">
-          <a href="tel:+27112368630" className="header-phone">
+          <a href="tel:+27835529401" className="header-phone">
             <Phone className="icon" />
-            <span>(011) 236 8630</span>
+            <span>(083) 552 9401</span>
           </a>
           <button className="mobile-menu-toggle" onClick={() => setMobileMenuOpen(true)}>
             <Menu className="icon" />
@@ -170,18 +170,19 @@ export function ImageSlider({ interval = 5000 }) {
               <NavLink to="/" onClick={() => setMobileMenuOpen(false)}>
                 Home
               </NavLink>
-              <NavLink to="/services" onClick={() => setMobileMenuOpen(false)}>
-                Services
-              </NavLink>
               <NavLink to="/about" onClick={() => setMobileMenuOpen(false)}>
                 About
               </NavLink>
-              <NavLink to="/contact" onClick={() => setMobileMenuOpen(false)}>
-                Contact
+              <NavLink to="/services" onClick={() => setMobileMenuOpen(false)}>
+                Services
               </NavLink>
               <NavLink to="/experience" onClick={() => setMobileMenuOpen(false)}>
                 Experience
               </NavLink>
+              <NavLink to="/contact" onClick={() => setMobileMenuOpen(false)}>
+                Contact
+              </NavLink>
+              
             </nav>
           </div>
         )}
