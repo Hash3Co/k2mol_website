@@ -15,6 +15,353 @@
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+    <script type="module" src="/src/main.jsx">
+      // ==========================================================================
+// PREMIUM HERO SLIDER WITH STYLISH TRANSITIONS
+// ==========================================================================
+
+function initHeroSlider() {
+    const slides = document.querySelectorAll('.slide');
+    if (!slides || slides.length === 0) {
+        console.warn('No slides found');
+        return;
+    }
+    
+    let currentIndex = 0;
+    const totalSlides = slides.length;
+    let slideInterval;
+    let isTransitioning = false;
+    
+    // Setup initial state
+    slides.forEach((slide, index) => {
+        slide.classList.remove('active', 'exit');
+        if (index === 0) {
+            slide.classList.add('active');
+            const bgImage = slide.getAttribute('data-bg') || slide.style.backgroundImage;
+            if (bgImage) {
+                slide.style.backgroundImage = bgImage;
+            }
+        }
+    });
+    
+    function changeSlide(index) {
+        if (isTransitioning || index === currentIndex) return;
+        isTransitioning = true;
+        
+        const currentSlide = slides[currentIndex];
+        const nextSlide = slides[index];
+        
+        if (!currentSlide || !nextSlide) {
+            isTransitioning = false;
+            return;
+        }
+        
+        // Set background for next slide
+        const bgImage = nextSlide.getAttribute('data-bg') || nextSlide.style.backgroundImage;
+        if (bgImage) {
+            nextSlide.style.backgroundImage = bgImage;
+        }
+        
+        // Animate current slide out
+        currentSlide.classList.remove('active');
+        currentSlide.classList.add('exit');
+        
+        // Animate next slide in
+        nextSlide.classList.add('active');
+        nextSlide.classList.remove('exit');
+        
+        // Clean up after transition
+        setTimeout(() => {
+            slides.forEach(s => s.classList.remove('exit'));
+            isTransitioning = false;
+        }, 2000);
+        
+        currentIndex = index;
+    }
+    
+    function nextSlide() {
+        if (isTransitioning) return;
+        const nextIndex = (currentIndex + 1) % totalSlides;
+        changeSlide(nextIndex);
+    }
+    
+    function prevSlide() {
+        if (isTransitioning) return;
+        const prevIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+        changeSlide(prevIndex);
+    }
+    
+    // Auto-slide with dynamic timing
+    function startAutoSlide() {
+        if (slideInterval) clearInterval(slideInterval);
+        slideInterval = setInterval(nextSlide, 6000); // 6 seconds for more dramatic effect
+    }
+    
+    function stopAutoSlide() {
+        if (slideInterval) {
+            clearInterval(slideInterval);
+            slideInterval = null;
+        }
+    }
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') {
+            e.preventDefault();
+            stopAutoSlide();
+            nextSlide();
+            setTimeout(startAutoSlide, 8000);
+        } else if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            stopAutoSlide();
+            prevSlide();
+            setTimeout(startAutoSlide, 8000);
+        }
+    });
+    
+    // Preload images
+    function preloadImages() {
+        slides.forEach(slide => {
+            const bgImage = slide.getAttribute('data-bg');
+            if (bgImage) {
+                const img = new Image();
+                img.src = bgImage;
+            }
+        });
+    }
+    preloadImages();
+    
+    startAutoSlide();
+    
+    // Pause on interaction
+    const slider = document.querySelector('.hero-slider');
+    if (slider) {
+        slider.addEventListener('mouseenter', stopAutoSlide);
+        slider.addEventListener('mouseleave', startAutoSlide);
+    }
+    
+    // Touch support
+    let touchStartX = 0;
+    if (slider) {
+        slider.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+            stopAutoSlide();
+        }, { passive: true });
+        
+        slider.addEventListener('touchend', (e) => {
+            const touchEndX = e.changedTouches[0].screenX;
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) nextSlide();
+                else prevSlide();
+            }
+            setTimeout(startAutoSlide, 8000);
+        }, { passive: true });
+    }
+    
+    console.log(`✨ Premium hero slider initialized with ${totalSlides} slides`);
+    }
+
+    // Initialize when DOM is ready
+    document.addEventListener('DOMContentLoaded', initHeroSlider);
+
+    // ==========================================================================
+// FOOTER WITH LAZY LOADING & IMAGE OPTIMIZATION
+// ==========================================================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Initializing optimized footer...');
+    
+    const footerContainer = document.getElementById('footer-container');
+    if (!footerContainer) {
+        console.warn('Footer container not found');
+        return;
+    }
+    
+    // Show minimal loading state (no spinner, just placeholder)
+    footerContainer.innerHTML = `
+        <div class="footer-placeholder" style="
+            padding: 1rem 0;
+            text-align: center;
+            color: #D4AF37;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #0a0a0a 25%, #1a1a1a 50%, #0a0a0a 75%);
+            background-size: 200% 100%;
+            animation: footerShimmer 1.5s infinite;
+            border-radius: 4px;
+        ">
+            <span style="opacity: 0.6;">Loading...</span>
+        </div>
+        <style>
+            @keyframes footerShimmer {
+                0% { background-position: -200% 0; }
+                100% { background-position: 200% 0; }
+            }
+        </style>
+    `;
+    
+    // Load footer with image optimization
+    loadOptimizedFooter(footerContainer);
+});
+
+function loadOptimizedFooter(container) {
+    console.log('Loading optimized footer...');
+    
+    // Immediate load - no delay
+    try {
+        const footerHTML = buildOptimizedFooterHTML();
+        container.innerHTML = footerHTML;
+        
+        // Lazy load footer logo after content is rendered
+        lazyLoadFooterLogo();
+        
+        console.log('✅ Footer loaded successfully');
+    } catch (error) {
+        console.error('Error loading footer:', error);
+        showMinimalFooter(container);
+    }
+}
+
+function buildOptimizedFooterHTML() {
+    return `
+        <footer class="footer" role="contentinfo">
+            <div class="footer-container">
+                <!-- Main Footer Grid -->
+                <div class="footer-grid">
+                    <!-- Brand Column with Optimized Logo -->
+                    <div class="footer-section">
+                        <div class="footer-brand">
+                            <!-- Logo with lazy loading and proper sizing -->
+                            <img 
+                                src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='120'%3E%3Crect width='200' height='120' fill='%231a1a1a'/%3E%3Ctext x='50' y='65' font-family='Arial' font-size='24' fill='%23D4AF37'%3EJS Bricks%3C/text%3E%3C/svg%3E"
+                                data-src="path-to-your-footer-logo.png"
+                                alt="JS Bricks Logo"
+                                class="footer-logo lazy"
+                                width="200"
+                                height="120"
+                                loading="lazy"
+                                decoding="async"
+                                onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22120%22%3E%3Crect width=%22200%22 height=%22120%22 fill=%22%231a1a1a%22/%3E%3Ctext x=%2250%22 y=%2265%22 font-family=%22Arial%22 font-size=%2224%22 fill=%22%23D4AF37%22%3EJS Bricks%3C/text%3E%3C/svg%3E'"
+                            />
+                            <h3 style="margin-top: 0.5rem;">JS Bricks</h3>
+                        </div>
+                        <p>Premium construction and renovation services with over 8 years of excellence. We bring your vision to life with quality craftsmanship.</p>
+                    </div>
+                    
+                    <!-- Quick Links -->
+                    <div class="footer-section">
+                        <h3>Quick Links</h3>
+                        <a href="/" class="footer-link">Home</a>
+                        <a href="/about" class="footer-link">About</a>
+                        <a href="/services" class="footer-link">Services</a>
+                        <a href="/projects" class="footer-link">Projects</a>
+                        <a href="/clients" class="footer-link">Clients</a>
+                        <a href="/contact" class="footer-link">Contact</a>
+                    </div>
+                    
+                    <!-- Contact Info -->
+                    <div class="footer-section">
+                        <h3>Contact</h3>
+                        <p><strong>Phone:</strong> <a href="tel:+27643403380" class="contact-link">+27 64 340 3380</a></p>
+                        <p><strong>Email:</strong> <a href="mailto:info@jsbricks.co.za" class="contact-link">info@jsbricks.co.za</a></p>
+                        <address>
+                            <strong>Address:</strong><br>
+                            Cape Town,<br>
+                            South Africa
+                        </address>
+                    </div>
+                </div>
+                
+                <!-- Copyright -->
+                <div class="footer-copyright">
+                    <p>&copy; ${new Date().getFullYear()} JS Bricks. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    `;
+}
+
+// ==========================================================================
+// LAZY LOAD FOOTER LOGO
+// ==========================================================================
+
+function lazyLoadFooterLogo() {
+    // Use Intersection Observer for lazy loading
+    if ('IntersectionObserver' in window) {
+        const logo = document.querySelector('.footer-logo.lazy');
+        if (logo) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        const src = img.getAttribute('data-src');
+                        if (src) {
+                            // Add loading state
+                            img.classList.add('loading');
+                            
+                            // Load the image
+                            const tempImg = new Image();
+                            tempImg.onload = function() {
+                                img.src = src;
+                                img.classList.remove('loading');
+                                img.classList.add('loaded');
+                            };
+                            tempImg.onerror = function() {
+                                // Keep placeholder on error
+                                img.classList.remove('loading');
+                                img.classList.add('error');
+                            };
+                            tempImg.src = src;
+                        }
+                        observer.unobserve(img);
+                    }
+                });
+            }, {
+                rootMargin: '50px 0px',
+                threshold: 0.1
+            });
+            observer.observe(logo);
+        }
+    } else {
+        // Fallback for older browsers - load immediately
+        const logo = document.querySelector('.footer-logo.lazy');
+        if (logo) {
+            const src = logo.getAttribute('data-src');
+            if (src) {
+                logo.src = src;
+            }
+        }
+    }
+}
+
+function showMinimalFooter(container) {
+    console.log('Showing minimal footer');
+    container.innerHTML = `
+        <footer class="footer" style="background:#111;color:#D4AF37;padding:1.5rem 1rem;text-align:center;border-top:1px solid #D4AF37;">
+            <div style="max-width:1200px;margin:0 auto;">
+                <h3 style="color:#D4AF37;font-size:1.5rem;margin-bottom:0.5rem;">JS Bricks</h3>
+                <p style="color:#E6C766;font-size:0.9rem;">
+                    <a href="tel:+27643403380" style="color:#D4AF37;text-decoration:none;">+27 64 340 3380</a> | 
+                    <a href="mailto:info@jsbricks.co.za" style="color:#D4AF37;text-decoration:none;">info@jsbricks.co.za</a>
+                </p>
+                <div style="border-top:1px solid rgba(212,175,55,0.2);padding-top:0.75rem;margin-top:0.75rem;">
+                    <p style="color:#E6C766;font-size:0.8rem;">&copy; ${new Date().getFullYear()} JS Bricks</p>
+                </div>
+            </div>
+        </footer>
+    `;
+}
+
+    // Initialize footer
+    document.addEventListener('DOMContentLoaded', function() {
+        const footerContainer = document.getElementById('footer-container');
+        if (footerContainer) {
+            loadOptimizedFooter(footerContainer);
+        }
+    });
+    </script>
   </body>
 </html>
