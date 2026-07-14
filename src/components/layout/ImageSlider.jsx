@@ -3,14 +3,14 @@ import { NavLink, useLocation } from 'react-router-dom';
 import { Menu, Phone, X } from 'lucide-react';
 
 // Home page images
-import homeImage1 from '../../assets/images/home/IMG-20250620-WA0022.jpg';
+import homeImage1 from '../../assets/images/home/IMG-20260713-WA0082.jpg';
 import homeImage2 from '../../assets/images/home/IMG-20250620-WA0024.jpg';
 import homeImage3 from '../../assets/images/home/IMG-20250620-WA0036.jpg';
-import homeImage4 from '../../assets/images/home/IMG-20250620-WA0043.jpg';
+import homeImage4 from '../../assets/images/home/IMG-20260318-WA0020.jpg';
 
 // About page images
-import aboutImage1 from '../../assets/images/about/IMG-20260318-WA0027.jpg';
-import aboutImage2 from '../../assets/images/about/IMG-20260318-WA0030.jpg';
+import aboutImage1 from '../../assets/images/about/IMG-20260713-WA0036.jpg';
+import aboutImage2 from '../../assets/images/about/IMG-20260713-WA0090.jpg';
 import aboutImage3 from '../../assets/images/about/IMG-20260318-WA0040.jpg';
 import aboutImage4 from '../../assets/images/about/IMG-20260318-WA0059.jpg';
 
@@ -18,16 +18,19 @@ import aboutImage4 from '../../assets/images/about/IMG-20260318-WA0059.jpg';
 import servicesImage1 from '../../assets/images/services/IMG-20260318-WA0019.jpg';
 import servicesImage2 from '../../assets/images/services/IMG-20260318-WA0023.jpg';
 import servicesImage3 from '../../assets/images/services/IMG-20260318-WA0043.jpg';
+import servicesImage4 from '../../assets/images/services/IMG-20260318-WA0074.jpg';
 
 // Experience page images (will also be used for Clients and Projects)
-import experienceImage1 from '../../assets/images/experience/IMG-20260318-WA0003.jpg';
-import experienceImage2 from '../../assets/images/experience/IMG-20260318-WA0060.jpg';
-import experienceImage3 from '../../assets/images/experience/IMG-20260318-WA0067.jpg';
+import experienceImage1 from '../../assets/images/experience/IMG-20260713-WA0054.jpg';
+import experienceImage2 from '../../assets/images/experience/IMG-20260713-WA0044.jpg';
+import experienceImage3 from '../../assets/images/experience/IMG-20260713-WA0047.jpg';
+import experienceImage4 from '../../assets/images/experience/IMG-20260713-WA0089.jpg';
 
 // Contact page images
-import contactImage1 from '../../assets/images/contact/IMG-20260318-WA0036.jpg';
-import contactImage2 from '../../assets/images/contact/IMG-20260318-WA0054.jpg';
+import contactImage1 from '../../assets/images/contact/IMG-20250620-WA0043.jpg';
+import contactImage2 from '../../assets/images/contact/IMG-20260713-WA0057.jpg';
 import contactImage3 from '../../assets/images/contact/IMG-20260318-WA0065.jpg';
+import contactImage4 from '../../assets/images/contact/IMG-20260318-WA0021.jpg';
 
 // Page configuration with images and content
 const pageConfig = {
@@ -46,35 +49,35 @@ const pageConfig = {
     pageName: 'About Us'
   },
   '/services': {
-    images: [servicesImage1, servicesImage2, servicesImage3],
+    images: [servicesImage1, servicesImage2, servicesImage3, servicesImage4],
     title: 'Our Services',
     subtitle: 'Comprehensive Quantity Surveying and Project Management Solutions',
     heading: 'Expertise You Can Rely On',
     pageName: 'Services'
   },
   '/experience': {
-    images: [experienceImage1, experienceImage2, experienceImage3],
+    images: [experienceImage1, experienceImage2, experienceImage3, experienceImage4],
     title: 'Our Experience',
     subtitle: 'Delivering Results Across Diverse Construction Projects',
     heading: 'Proven Track Record of Success',
     pageName: 'Experience'
   },
   '/contact': {
-    images: [contactImage1, contactImage2, contactImage3],
+    images: [contactImage1, contactImage2, contactImage3, contactImage4],
     title: 'Contact K2MOL Consulting',
     subtitle: 'Get in Touch with Our Expert Team',
     heading: 'Let\'s Discuss Your Project',
     pageName: 'Contact'
   },
   '/projects': {
-    images: [experienceImage1, experienceImage2, experienceImage3], // Using experience images
+    images: [experienceImage1, experienceImage2, experienceImage3, experienceImage4], // Using experience images
     title: 'Our Projects',
     subtitle: 'Showcasing Our Portfolio of Successful Projects',
     heading: 'Building Excellence Together',
     pageName: 'Projects'
   },
   '/clients': {
-    images: [experienceImage1, experienceImage2, experienceImage3], // Using experience images
+    images: [experienceImage1, experienceImage2, experienceImage3, experienceImage4], // Using experience images
     title: 'Our Clients',
     subtitle: 'Trusted by Leading Companies Across Industries',
     heading: 'Partnerships Built on Trust',
