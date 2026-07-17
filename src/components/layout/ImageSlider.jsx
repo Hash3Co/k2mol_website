@@ -20,7 +20,7 @@ import servicesImage2 from '../../assets/images/services/IMG-20260318-WA0023.jpg
 import servicesImage3 from '../../assets/images/services/IMG-20260318-WA0043.jpg';
 import servicesImage4 from '../../assets/images/services/IMG-20260318-WA0074.jpg';
 
-// Experience page images (will also be used for Clients and Projects)
+// Experience page images
 import experienceImage1 from '../../assets/images/experience/IMG-20260713-WA0054.jpg';
 import experienceImage2 from '../../assets/images/experience/IMG-20260713-WA0044.jpg';
 import experienceImage3 from '../../assets/images/experience/IMG-20260713-WA0077.jpg';
@@ -39,49 +39,56 @@ const pageConfig = {
     title: 'Welcome to K2MOL Consulting',
     subtitle: 'Professional Quantity Surveying and Project Management Solutions',
     heading: 'Building Excellence in Construction',
-    pageName: 'Home'
+    pageName: 'Home',
+    transition: 'x-reveal' // Image growth transition
   },
   '/about': {
     images: [aboutImage1, aboutImage2, aboutImage3, aboutImage4],
     title: 'About K2MOL Consulting',
     subtitle: 'Delivering Excellence in Quantity Surveying Since 2008',
     heading: 'Your Trusted Construction Partner',
-    pageName: 'About Us'
+    pageName: 'About Us',
+    transition: 'slice' // 3D slice transition
   },
   '/services': {
     images: [servicesImage1, servicesImage2, servicesImage3, servicesImage4],
     title: 'Our Services',
     subtitle: 'Comprehensive Quantity Surveying and Project Management Solutions',
     heading: 'Expertise You Can Rely On',
-    pageName: 'Services'
+    pageName: 'Services',
+    transition: 'band' // Band reveal transition
   },
   '/experience': {
     images: [experienceImage1, experienceImage2, experienceImage3, experienceImage4],
     title: 'Our Experience',
     subtitle: 'Delivering Results Across Diverse Construction Projects',
     heading: 'Proven Track Record of Success',
-    pageName: 'Experience'
+    pageName: 'Experience',
+    transition: 'x-reveal' // X-Reveal split transition
   },
   '/contact': {
     images: [contactImage1, contactImage2, contactImage3, contactImage4],
     title: 'Contact K2MOL Consulting',
     subtitle: 'Get in Touch with Our Expert Team',
     heading: 'Let\'s Discuss Your Project',
-    pageName: 'Contact'
+    pageName: 'Contact',
+    transition: 'x-reveal' // Fade with blur transition
   },
   '/projects': {
-    images: [experienceImage1, experienceImage2, experienceImage3, experienceImage4], // Using experience images
+    images: [experienceImage1, experienceImage2, experienceImage3, experienceImage4],
     title: 'Our Projects',
     subtitle: 'Showcasing Our Portfolio of Successful Projects',
     heading: 'Building Excellence Together',
-    pageName: 'Projects'
+    pageName: 'Projects',
+    transition: 'slice' // Using slice transition for projects
   },
   '/clients': {
-    images: [experienceImage1, experienceImage2, experienceImage3, experienceImage4], // Using experience images
+    images: [experienceImage1, experienceImage2, experienceImage3, experienceImage4],
     title: 'Our Clients',
     subtitle: 'Trusted by Leading Companies Across Industries',
     heading: 'Partnerships Built on Trust',
-    pageName: 'Clients'
+    pageName: 'Clients',
+    transition: 'band' // Using band transition for clients
   }
 };
 
@@ -98,29 +105,49 @@ export function ImageSlider({ interval = 5000 }) {
   }
   
   const images = config.images;
-  const { title, subtitle, heading, pageName } = config;
+  const { title, subtitle, heading, pageName, transition } = config;
   
   const [currentIndex, setCurrentIndex] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [previousIndex, setPreviousIndex] = useState(0);
 
   useEffect(() => {
     const timer = setInterval(() => {
+      setPreviousIndex(currentIndex);
       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
     }, interval);
 
     return () => clearInterval(timer);
-  }, [images.length, interval]);
+  }, [images.length, interval, currentIndex]);
+
+  // Get transition class based on page
+  const getTransitionClass = () => {
+    switch(transition) {
+      case 'growth':
+        return 'growth-transition';
+      case 'slice':
+        return 'slice-transition';
+      case 'band':
+        return 'band-transition';
+      case 'x-reveal':
+        return 'x-transition';
+      case 'fade':
+        return 'fade-transition';
+      default:
+        return 'growth-transition';
+    }
+  };
 
   return (
-    <div className="hero-slider">
+    <div className={`hero-slider ${getTransitionClass()}`}>
       {images.map((image, index) => {
         const isActive = index === currentIndex;
-        const isNext = index === (currentIndex + 1) % images.length;
+        const isPrevious = index === previousIndex;
         
         return(
           <div
             key={index}
-            className={`slide ${isActive ? 'active' : ''} ${isNext ? 'next' : ''}`}
+            className={`slide ${isActive ? 'active' : ''} ${isPrevious && !isActive ? 'previous' : ''}`}
             style={{ backgroundImage: `url(${image})` }}
           />
         );
@@ -182,7 +209,6 @@ export function ImageSlider({ interval = 5000 }) {
               <NavLink to="/contact" onClick={() => setMobileMenuOpen(false)}>
                 Contact
               </NavLink>
-              
             </nav>
           </div>
         )}

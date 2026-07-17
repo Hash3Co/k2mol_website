@@ -30,12 +30,7 @@ export function ContactPage() {
         <h1> Contact Us </h1>
         <p> We're here to help you 24 hours a day </p>
         <div className="contact-page__grid">
-          <div>
-            <h2 className="contact-page__section-title">Send Us a Message</h2>
-            <div className="contact-page__form-section">
-              <ContactForm />
-            </div>
-          </div>
+        
           {/* Office Locations Card with Embedded Map */}
             <div className="contact-page__locations-card">
               <div className="contact-page__locations-header">
