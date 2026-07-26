@@ -1,4 +1,3 @@
-import { ContactForm } from '../sections/ContactForm';
 import { Mail, Phone, MapPin, Linkedin, Twitter,  Building2 } from 'lucide-react';
 
 export function ContactPage() {

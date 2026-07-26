@@ -5,8 +5,7 @@ import {
   Briefcase, Users, CheckCircle, Clock, 
   ArrowRight, Star, Award, TrendingUp 
 } from 'lucide-react';
-import { ProjectPage } from './ProjectsPage'; // Your existing component
-import { ClientPage } from './ClientPage'; // Import your Clients page component
+
 
 export function ExperiencePage() {
   const navigate = useNavigate();
@@ -68,10 +67,7 @@ export function ExperiencePage() {
       {/* Toggle Cards for Projects/Clients */}
       <div className="experience-cards">
         {/* Projects Card */}
-        <div 
-          className={`action-card ${activeSection === 'projects' ? 'active' : ''}`}
-          onClick={() => setActiveSection('projects')}
-        >
+        <div >
           <div className="card-background projects-bg"></div>
           <div className="card-header">
             <div className="card-icon"><Briefcase /></div>
@@ -94,16 +90,10 @@ export function ExperiencePage() {
               </div>
             </div>
           </div>
-          {activeSection === 'projects' && (
-            <div className="card-ribbon">Active</div>
-          )}
         </div>
         
         {/* Clients Card */}
-        <div 
-          className={`action-card ${activeSection === 'clients' ? 'active' : ''}`}
-          onClick={() => setActiveSection('clients')}
-        >
+        <div>
           <div className="card-background clients-bg"></div>
           <div className="card-header">
             <div className="card-icon"><Users /></div>
@@ -126,63 +116,8 @@ export function ExperiencePage() {
               </div>
             </div>
           </div>
-          {activeSection === 'clients' && (
-            <div className="card-ribbon">Active</div>
-          )}
         </div>
       </div>
-
-      {/* Dynamic Content Section */}
-      <div className="dynamic-content">
-        {activeSection === 'projects' ? (
-          <>
-            {/* Your ProjectPage component rendered here */}
-            <ProjectPage />
-            
-            {/* Navigation Button to dedicated projects page */}
-            <div className="experience-cta">
-              <div className="cta-content">
-                <h3 className="cta-title">Explore Our Portfolio</h3>
-                <p className="cta-description">
-                  Discover all our completed and ongoing projects
-                </p>
-                <div className="cta-actions">
-                  <button 
-                    className="cta-button primary"
-                    onClick={() => navigate('/projects')}
-                  >
-                    View All Projects <ArrowRight />
-                  </button>
-                </div>
-              </div>
-            </div>
-          </>
-        ) : (
-          <>
-            {/* Your ClientsPage component rendered here */}
-            <ClientPage />
-            
-            {/* Navigation Button to dedicated clients page */}
-            <div className="experience-cta">
-              <div className="cta-content">
-                <h3 className="cta-title">Our Valued Partners</h3>
-                <p className="cta-description">
-                  See all the companies that trust our services
-                </p>
-                <div className="cta-actions">
-                  <button 
-                    className="cta-button primary"
-                    onClick={() => navigate('/clients')}
-                  >
-                    View All Clients <ArrowRight />
-                  </button>
-                </div>
-              </div>
-            </div>
-          </>
-        )}
-      </div>
-
     </div>
   );
 }

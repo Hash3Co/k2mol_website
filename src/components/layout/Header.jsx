@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Menu, Phone, X } from 'lucide-react';
+import { Menu, Phone, X, ChevronDown } from 'lucide-react';
 import logo from '../../assets/images/K2M_Logo.jpg';
 
 export function Header() {
@@ -21,17 +21,29 @@ export function Header() {
         </div>
         
         <nav className="header-nav">
-          <a href="/">Home</a>
-          <a href="/about">About Us</a>
-          <a href="/services">Services</a>
-          <a href="/experience">Experience</a>
-          <a href="/contact">Contact</a>
+          <NavLink to="/">Home</NavLink>
+          <NavLink to="/about">About Us</NavLink>
+          <NavLink to="/services">Services</NavLink>
+          
+          {/* Dropdown for Experience */}
+          <div className="dropdown">
+            <button className="dropdown-toggle">
+              Experience <ChevronDown size={14} style={{ marginLeft: '4px' }} />
+            </button>
+            <div className="dropdown-menu">
+              <NavLink to="/experience">Experience</NavLink>
+              <NavLink to="/projects">Projects</NavLink>
+              <NavLink to="/clients">Clients</NavLink>
+            </div>
+          </div>
+          
+          <NavLink to="/contact">Contact</NavLink>
         </nav>
         
         <div className="header-actions">
-          <a href="tel:+27112368630" className="header-phone">
+          <a href="tel:+27835529401" className="header-phone">
             <Phone className="icon" />
-            <span>(011) 236 8630</span>
+            <span>(083) 552 9401</span>
           </a>
           <button className="mobile-menu-toggle" onClick={() => setMobileMenuOpen(true)}>
             <Menu className="icon" />
@@ -39,7 +51,7 @@ export function Header() {
         </div>
       </div>
 
-    {mobileMenuOpen && (
+      {mobileMenuOpen && (
         <div className="mobile-menu">
           <div className="mobile-menu-header">
             <img
@@ -62,15 +74,24 @@ export function Header() {
             <NavLink to="/about" onClick={() => setMobileMenuOpen(false)}>
               About
             </NavLink>
+            
+            <span className="dropdown-label">Experience</span>
+            <div className="mobile-dropdown-items">
+              <NavLink to="/experience" onClick={() => setMobileMenuOpen(false)}>
+                Experience
+              </NavLink>
+              <NavLink to="/projects" onClick={() => setMobileMenuOpen(false)}>
+                Projects
+              </NavLink>
+              <NavLink to="/clients" onClick={() => setMobileMenuOpen(false)}>
+                Clients
+              </NavLink>
+            </div>
+            
             <NavLink to="/contact" onClick={() => setMobileMenuOpen(false)}>
               Contact
             </NavLink>
-            <NavLink to="/experience" onClick={() => setMobileMenuOpen(false)}>
-              Experience
-            </NavLink>
-            
           </nav>
-        
         </div>
       )}
     </header>

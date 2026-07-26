@@ -1,180 +1,179 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { Menu, Phone, X } from 'lucide-react';
+import { Menu, Phone, X, ChevronDown } from 'lucide-react';
 
 // Home page images
-import homeImage1 from '../../assets/images/home/IMG-20260713-WA0082.jpg';
-import homeImage2 from '../../assets/images/home/IMG-20260318-WA0012.jpg';
-import homeImage3 from '../../assets/images/home/IMG-20250620-WA0036.jpg';
-import homeImage4 from '../../assets/images/home/IMG-20260318-WA0020.jpg';
+import homeImage1 from '../../assets/images/home/home1.jpeg';
+import homeImage2 from '../../assets/images/home/home2.jpeg';
+import homeImage3 from '../../assets/images/home/home3.jpeg';
+import homeImage4 from '../../assets/images/home/home4.jpeg';
 
 // About page images
-import aboutImage1 from '../../assets/images/about/IMG-20260713-WA0036.jpg';
-import aboutImage2 from '../../assets/images/about/IMG-20260713-WA0090.jpg';
-import aboutImage3 from '../../assets/images/about/IMG-20260318-WA0040.jpg';
-import aboutImage4 from '../../assets/images/about/IMG-20260318-WA0059.jpg';
+import aboutImage1 from '../../assets/images/about/about1.jpeg';
+import aboutImage2 from '../../assets/images/about/about2.jpeg';
 
 // Services page images
-import servicesImage1 from '../../assets/images/services/IMG-20260318-WA0019.jpg';
-import servicesImage2 from '../../assets/images/services/IMG-20260318-WA0023.jpg';
-import servicesImage3 from '../../assets/images/services/IMG-20260318-WA0043.jpg';
-import servicesImage4 from '../../assets/images/services/IMG-20260318-WA0074.jpg';
+import servicesImage1 from '../../assets/images/services/service1.jpeg';
 
 // Experience page images
-import experienceImage1 from '../../assets/images/experience/IMG-20260713-WA0054.jpg';
-import experienceImage2 from '../../assets/images/experience/IMG-20260713-WA0044.jpg';
-import experienceImage3 from '../../assets/images/experience/IMG-20260713-WA0077.jpg';
-import experienceImage4 from '../../assets/images/experience/IMG-20260713-WA0089.jpg';
+import experienceImage1 from '../../assets/images/experience/experience1.jpeg';
+import experienceImage4 from '../../assets/images/experience/experience4.jpeg';
 
 // Contact page images
-import contactImage1 from '../../assets/images/contact/IMG-20250620-WA0043.jpg';
-import contactImage2 from '../../assets/images/contact/IMG-20260713-WA0057.jpg';
-import contactImage3 from '../../assets/images/contact/IMG-20260318-WA0065.jpg';
-import contactImage4 from '../../assets/images/contact/IMG-20260318-WA0021.jpg';
+import contactImage4 from '../../assets/images/contact/contact4.jpeg';
 
-// Page configuration with images and content
+// Page configuration
 const pageConfig = {
   '/': {
-    images: [homeImage1, homeImage2, homeImage3, homeImage4],
-    title: 'Welcome to K2MOL Consulting',
-    subtitle: 'Professional Quantity Surveying and Project Management Solutions',
-    heading: 'Building Excellence in Construction',
+    groups: [
+      {
+        title: 'Rely On Our Ability',
+        description: 'Delivering world-class construction and consulting services across Southern Africa and beyond.',
+        images: [homeImage1, homeImage3, homeImage2, homeImage4],
+      },
+    ],
     pageName: 'Home',
-    transition: 'x-reveal' // Image growth transition
+    isFullScreen: true,
   },
   '/about': {
-    images: [aboutImage1, aboutImage2, aboutImage3, aboutImage4],
-    title: 'About K2MOL Consulting',
-    subtitle: 'Delivering Excellence in Quantity Surveying Since 2008',
-    heading: 'Your Trusted Construction Partner',
+    groups: [
+      {
+        title: 'About Us',
+        description: 'A legacy built on precision, safety, quality and reliability since 2017.',
+        images: [aboutImage1, aboutImage2 ],
+      },
+    ],
     pageName: 'About Us',
-    transition: 'slice' // 3D slice transition
+    isFullScreen: false,
   },
   '/services': {
-    images: [servicesImage1, servicesImage2, servicesImage3, servicesImage4],
-    title: 'Our Services',
-    subtitle: 'Comprehensive Quantity Surveying and Project Management Solutions',
-    heading: 'Expertise You Can Rely On',
+    groups: [
+      {
+        title: 'Our Services',
+        description: 'Comprehensive construction and consulting solutions for every project.',
+        images: [servicesImage1],
+      },
+    ],
     pageName: 'Services',
-    transition: 'band' // Band reveal transition
+    isFullScreen: false,
   },
   '/experience': {
-    images: [experienceImage1, experienceImage2, experienceImage3, experienceImage4],
-    title: 'Our Experience',
-    subtitle: 'Delivering Results Across Diverse Construction Projects',
-    heading: 'Proven Track Record of Success',
+    groups: [
+      {
+        title: 'Experience',
+        description: 'Years of excellence delivering successful projects worldwide.',
+        images: [experienceImage4],
+      },
+    ],
     pageName: 'Experience',
-    transition: 'x-reveal' // X-Reveal split transition
-  },
-  '/contact': {
-    images: [contactImage1, contactImage2, contactImage3, contactImage4],
-    title: 'Contact K2MOL Consulting',
-    subtitle: 'Get in Touch with Our Expert Team',
-    heading: 'Let\'s Discuss Your Project',
-    pageName: 'Contact',
-    transition: 'x-reveal' // Fade with blur transition
+    isFullScreen: false,
   },
   '/projects': {
-    images: [experienceImage1, experienceImage2, experienceImage3, experienceImage4],
-    title: 'Our Projects',
-    subtitle: 'Showcasing Our Portfolio of Successful Projects',
-    heading: 'Building Excellence Together',
+    groups: [
+      {
+        title: 'Our Projects',
+        description: 'Showcasing our portfolio of successful construction projects.',
+        images: [experienceImage4],
+      },
+    ],
     pageName: 'Projects',
-    transition: 'slice' // Using slice transition for projects
+    isFullScreen: false,
   },
   '/clients': {
-    images: [experienceImage1, experienceImage2, experienceImage3, experienceImage4],
-    title: 'Our Clients',
-    subtitle: 'Trusted by Leading Companies Across Industries',
-    heading: 'Partnerships Built on Trust',
+    groups: [
+      {
+        title: 'Our Clients',
+        description: 'Trusted by industry leaders across multiple sectors.',
+        images: [experienceImage1],
+      },
+    ],
     pageName: 'Clients',
-    transition: 'band' // Using band transition for clients
-  }
+    isFullScreen: false,
+  },
+  '/contact': {
+    groups: [
+      {
+        title: 'Contact Us',
+        description: 'Get in touch with our experienced team for your construction needs.',
+        images: [ contactImage4],
+      },
+    ],
+    pageName: 'Contact',
+    isFullScreen: false,
+  },
 };
 
 export function ImageSlider({ interval = 5000 }) {
   const location = useLocation();
   const currentPath = location.pathname.toLowerCase();
   
-  // Get configuration for current page
   const config = pageConfig[currentPath];
+  if (!config) return null;
   
-  // If page doesn't exist in config, return null
-  if (!config) {
-    return null;
-  }
+  // Flatten groups into slides
+  const slides = config.groups.flatMap((group) =>
+    group.images.map((image) => ({
+      image,
+      title: group.title,
+      description: group.description,
+    }))
+  );
   
-  const images = config.images;
-  const { title, subtitle, heading, pageName, transition } = config;
-  
+  const { pageName, isFullScreen } = config;
   const [currentIndex, setCurrentIndex] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [previousIndex, setPreviousIndex] = useState(0);
+  const currentSlide = slides[currentIndex];
 
+  // Auto-play
   useEffect(() => {
     const timer = setInterval(() => {
-      setPreviousIndex(currentIndex);
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+      setCurrentIndex((prev) => (prev + 1) % slides.length);
     }, interval);
-
     return () => clearInterval(timer);
-  }, [images.length, interval, currentIndex]);
+  }, [slides.length, interval]);
 
-  // Get transition class based on page
-  const getTransitionClass = () => {
-    switch(transition) {
-      case 'growth':
-        return 'growth-transition';
-      case 'slice':
-        return 'slice-transition';
-      case 'band':
-        return 'band-transition';
-      case 'x-reveal':
-        return 'x-transition';
-      case 'fade':
-        return 'fade-transition';
-      default:
-        return 'growth-transition';
-    }
-  };
+  // Determine CSS classes based on whether it's full screen or banner
+  const heroClass = isFullScreen ? 'hero hero-fullscreen' : 'hero hero-banner';
 
   return (
-    <div className={`hero-slider ${getTransitionClass()}`}>
-      {images.map((image, index) => {
-        const isActive = index === currentIndex;
-        const isPrevious = index === previousIndex;
-        
-        return(
-          <div
-            key={index}
-            className={`slide ${isActive ? 'active' : ''} ${isPrevious && !isActive ? 'previous' : ''}`}
-            style={{ backgroundImage: `url(${image})` }}
-          />
-        );
-      })}
+    <section className={heroClass}>
+      {/* Background Images */}
+      {slides.map((slide, index) => (
+        <div
+          key={index}
+          className={`hero-slide ${currentIndex === index ? 'active' : ''}`}
+          style={{ backgroundImage: `url(${slide.image})` }}
+        />
+      ))}
 
+      {/* Dark Overlay */}
       <div className="hero-overlay">
-        <div className="container mx-auto px-4">
-          <h1>{title}</h1>
-          <p>{subtitle}</p>
-        </div>
-
-        <div className="current-page-indicator">
-          {pageName}
-        </div>
-        
+        {/* Brand */}
         <div className="header-brand">
           <h1>K2MOL Consulting</h1>
         </div>
       
+        {/* Navigation */}
         <nav className="header-nav">
           <NavLink to="/">Home</NavLink>
           <NavLink to="/about">About Us</NavLink>
           <NavLink to="/services">Services</NavLink>
-          <NavLink to="/experience">Experience</NavLink>
+          
+          <div className="dropdown">
+            <button className="dropdown-toggle">
+              Experience <ChevronDown size={14} style={{ marginLeft: '4px' }} />
+            </button>
+            <div className="dropdown-menu">
+              <NavLink to="/experience">Experience</NavLink>
+              <NavLink to="/projects">Projects</NavLink>
+              <NavLink to="/clients">Clients</NavLink>
+            </div>
+          </div>
+          
           <NavLink to="/contact">Contact</NavLink>
         </nav>
 
+        {/* Header Actions */}
         <div className="header-actions">
           <a href="tel:+27835529401" className="header-phone">
             <Phone className="icon" />
@@ -185,6 +184,50 @@ export function ImageSlider({ interval = 5000 }) {
           </button>
         </div>
 
+        {/* Hero Content - Only show on fullscreen home page */}
+        {isFullScreen ? (
+          <div className="hero-content">
+            <h1 className="hero-title">
+              Rely On <span className="highlight">Our Ability</span>
+            </h1>
+            <p className="hero-description">
+              Delivering world-class construction and consulting services across Southern Africa and beyond.
+            </p>
+            
+            <div className="hero-buttons">
+              <button className="primary-btn">View Our Services</button>
+              <button className="secondary-btn">Contact Us</button>
+            </div>
+          </div>
+        ) : (
+          /* Banner content for other pages - like WBHO's ABOUT US section */
+          <div className="hero-banner-content">
+            <span className="banner-subtitle">{pageName}</span>
+            <h1 className="banner-title">{currentSlide.title}</h1>
+            <p className="banner-description">{currentSlide.description}</p>
+          </div>
+        )}
+
+        {/* Slide Indicators - Only on home page */}
+        {isFullScreen && (
+          <div className="hero-indicators">
+            {slides.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentIndex(index)}
+                className={`indicator ${currentIndex === index ? 'active' : ''}`}
+                aria-label={`Go to slide ${index + 1}`}
+              />
+            ))}
+          </div>
+        )}
+
+        {/* Page Indicator */}
+        <div className="current-page-indicator">
+          {pageName}
+        </div>
+
+        {/* Mobile Menu */}
         {mobileMenuOpen && (
           <div className="mobile-menu">
             <div className="mobile-menu-header">
@@ -194,25 +237,22 @@ export function ImageSlider({ interval = 5000 }) {
             </div>
            
             <nav className="mobile-nav">
-              <NavLink to="/" onClick={() => setMobileMenuOpen(false)}>
-                Home
-              </NavLink>
-              <NavLink to="/about" onClick={() => setMobileMenuOpen(false)}>
-                About
-              </NavLink>
-              <NavLink to="/services" onClick={() => setMobileMenuOpen(false)}>
-                Services
-              </NavLink>
-              <NavLink to="/experience" onClick={() => setMobileMenuOpen(false)}>
-                Experience
-              </NavLink>
-              <NavLink to="/contact" onClick={() => setMobileMenuOpen(false)}>
-                Contact
-              </NavLink>
+              <NavLink to="/" onClick={() => setMobileMenuOpen(false)}>Home</NavLink>
+              <NavLink to="/about" onClick={() => setMobileMenuOpen(false)}>About</NavLink>
+              <NavLink to="/services" onClick={() => setMobileMenuOpen(false)}>Services</NavLink>
+              
+              <span className="dropdown-label">Experience</span>
+              <div className="mobile-dropdown-items">
+                <NavLink to="/experience" onClick={() => setMobileMenuOpen(false)}>Experience</NavLink>
+                <NavLink to="/projects" onClick={() => setMobileMenuOpen(false)}>Projects</NavLink>
+                <NavLink to="/clients" onClick={() => setMobileMenuOpen(false)}>Clients</NavLink>
+              </div>
+              
+              <NavLink to="/contact" onClick={() => setMobileMenuOpen(false)}>Contact</NavLink>
             </nav>
           </div>
         )}
       </div>
-    </div>
+    </section>
   );
 }

@@ -49,28 +49,6 @@ export function AboutSection() {
             </div>
           </div>
 
-          {/* Center Column - Stats & Achievements */}
-          <div className="about-stats">
-            <div className="stats-grid">
-              <div className="stat-item">
-                <div className="stat-number">7+</div>
-                <div className="stat-label">Years Experience</div>
-              </div>
-              <div className="stat-item">
-                <div className="stat-number">50+</div>
-                <div className="stat-label">Projects Completed</div>
-              </div>
-              <div className="stat-item">
-                <div className="stat-number">100%</div>
-                <div className="stat-label">Client Satisfaction</div>
-              </div>
-              <div className="stat-item">
-                <div className="stat-number">24/7</div>
-                <div className="stat-label">Support</div>
-              </div>
-            </div>
-          </div>
-
           {/* Right Column - Core Values */}
           <div className="about-values">
             <div className="values-card">
