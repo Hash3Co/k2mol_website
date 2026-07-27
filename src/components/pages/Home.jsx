@@ -5,7 +5,7 @@ import {
   Phone, Mail, Linkedin, Twitter, Instagram
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-
+import HomeWatermark from "../../assets/images/watermark/about2.jpeg";
 export function Home() {
   const [currentStat, setCurrentStat] = useState(0);
 
@@ -30,7 +30,10 @@ export function Home() {
   ];
 
   return (
-    <div className="home-container">
+    <div className="home-container"
+      style={{
+        "--watermark": `url(${HomeWatermark})`,
+      }}>
       {/* Hero Section */}
       <section className="hero-section"> 
         <div className="hero-background"></div>

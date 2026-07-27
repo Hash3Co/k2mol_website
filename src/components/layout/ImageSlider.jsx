@@ -29,7 +29,7 @@ const pageConfig = {
       {
         title: 'Rely On Our Ability',
         description: 'Delivering world-class construction and consulting services across Southern Africa and beyond.',
-        images: [homeImage1, homeImage3, homeImage2, homeImage4],
+        images: [homeImage1, homeImage2, homeImage3, homeImage4],
       },
     ],
     pageName: 'Home',
@@ -38,9 +38,7 @@ const pageConfig = {
   '/about': {
     groups: [
       {
-        title: 'About Us',
-        description: 'A legacy built on precision, safety, quality and reliability since 2017.',
-        images: [aboutImage1, aboutImage2 ],
+        images: [aboutImage1, aboutImage2],
       },
     ],
     pageName: 'About Us',
@@ -49,8 +47,6 @@ const pageConfig = {
   '/services': {
     groups: [
       {
-        title: 'Our Services',
-        description: 'Comprehensive construction and consulting solutions for every project.',
         images: [servicesImage1],
       },
     ],
@@ -60,8 +56,6 @@ const pageConfig = {
   '/experience': {
     groups: [
       {
-        title: 'Experience',
-        description: 'Years of excellence delivering successful projects worldwide.',
         images: [experienceImage4],
       },
     ],
@@ -71,8 +65,6 @@ const pageConfig = {
   '/projects': {
     groups: [
       {
-        title: 'Our Projects',
-        description: 'Showcasing our portfolio of successful construction projects.',
         images: [experienceImage4],
       },
     ],
@@ -82,8 +74,6 @@ const pageConfig = {
   '/clients': {
     groups: [
       {
-        title: 'Our Clients',
-        description: 'Trusted by industry leaders across multiple sectors.',
         images: [experienceImage1],
       },
     ],
@@ -93,9 +83,7 @@ const pageConfig = {
   '/contact': {
     groups: [
       {
-        title: 'Contact Us',
-        description: 'Get in touch with our experienced team for your construction needs.',
-        images: [ contactImage4],
+        images: [contactImage4],
       },
     ],
     pageName: 'Contact',
@@ -110,7 +98,6 @@ export function ImageSlider({ interval = 5000 }) {
   const config = pageConfig[currentPath];
   if (!config) return null;
   
-  // Flatten groups into slides
   const slides = config.groups.flatMap((group) =>
     group.images.map((image) => ({
       image,
@@ -124,15 +111,20 @@ export function ImageSlider({ interval = 5000 }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const currentSlide = slides[currentIndex];
 
-  // Auto-play
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % slides.length);
-    }, interval);
-    return () => clearInterval(timer);
-  }, [slides.length, interval]);
-
-  // Determine CSS classes based on whether it's full screen or banner
+useEffect(() => {
+  // Preload images for smoother transitions
+  slides.forEach((slide) => {
+    const img = new Image();
+    img.src = slide.image;
+  });
+  
+  // Auto-play timer
+  const timer = setInterval(() => {
+    setCurrentIndex((prev) => (prev + 1) % slides.length);
+  }, interval);
+  
+  return () => clearInterval(timer);
+}, [slides.length, interval]);
   const heroClass = isFullScreen ? 'hero hero-fullscreen' : 'hero hero-banner';
 
   return (
@@ -142,11 +134,15 @@ export function ImageSlider({ interval = 5000 }) {
         <div
           key={index}
           className={`hero-slide ${currentIndex === index ? 'active' : ''}`}
-          style={{ backgroundImage: `url(${slide.image})` }}
+          style={{ 
+            backgroundImage: `url(${slide.image})`,
+            backgroundSize: 'cover',
+            backgroundPosition: isFullScreen ? 'center' : 'center 30%',
+            backgroundRepeat: 'no-repeat',
+          }}
         />
       ))}
 
-      {/* Dark Overlay */}
       <div className="hero-overlay">
         {/* Brand */}
         <div className="header-brand">
@@ -184,7 +180,7 @@ export function ImageSlider({ interval = 5000 }) {
           </button>
         </div>
 
-        {/* Hero Content - Only show on fullscreen home page */}
+        {/* Hero Content */}
         {isFullScreen ? (
           <div className="hero-content">
             <h1 className="hero-title">
@@ -200,7 +196,6 @@ export function ImageSlider({ interval = 5000 }) {
             </div>
           </div>
         ) : (
-          /* Banner content for other pages - like WBHO's ABOUT US section */
           <div className="hero-banner-content">
             <span className="banner-subtitle">{pageName}</span>
             <h1 className="banner-title">{currentSlide.title}</h1>
@@ -208,7 +203,6 @@ export function ImageSlider({ interval = 5000 }) {
           </div>
         )}
 
-        {/* Slide Indicators - Only on home page */}
         {isFullScreen && (
           <div className="hero-indicators">
             {slides.map((_, index) => (
@@ -222,34 +216,37 @@ export function ImageSlider({ interval = 5000 }) {
           </div>
         )}
 
-        {/* Page Indicator */}
         <div className="current-page-indicator">
           {pageName}
         </div>
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="mobile-menu">
-            <div className="mobile-menu-header">
-              <button onClick={() => setMobileMenuOpen(false)}>
-                <X className="icon" />
-              </button>
-            </div>
-           
-            <nav className="mobile-nav">
-              <NavLink to="/" onClick={() => setMobileMenuOpen(false)}>Home</NavLink>
-              <NavLink to="/about" onClick={() => setMobileMenuOpen(false)}>About</NavLink>
-              <NavLink to="/services" onClick={() => setMobileMenuOpen(false)}>Services</NavLink>
-              
-              <span className="dropdown-label">Experience</span>
-              <div className="mobile-dropdown-items">
-                <NavLink to="/experience" onClick={() => setMobileMenuOpen(false)}>Experience</NavLink>
-                <NavLink to="/projects" onClick={() => setMobileMenuOpen(false)}>Projects</NavLink>
-                <NavLink to="/clients" onClick={() => setMobileMenuOpen(false)}>Clients</NavLink>
+          <div className="mobile-menu-overlay">
+            <div className="mobile-menu">
+              <div className="mobile-menu-header">
+                <button onClick={() => setMobileMenuOpen(false)}>
+                  <X className="icon" />
+                </button>
               </div>
-              
-              <NavLink to="/contact" onClick={() => setMobileMenuOpen(false)}>Contact</NavLink>
-            </nav>
+             
+              <nav className="mobile-nav">
+                <NavLink to="/" onClick={() => setMobileMenuOpen(false)}>Home</NavLink>
+                <NavLink to="/about" onClick={() => setMobileMenuOpen(false)}>About</NavLink>
+                <NavLink to="/services" onClick={() => setMobileMenuOpen(false)}>Services</NavLink>
+                
+                <div className="mobile-dropdown-group">
+                  <span className="mobile-dropdown-label">Experience</span>
+                  <div className="mobile-dropdown-items">
+                    <NavLink to="/experience" onClick={() => setMobileMenuOpen(false)}>Experience</NavLink>
+                    <NavLink to="/projects" onClick={() => setMobileMenuOpen(false)}>Projects</NavLink>
+                    <NavLink to="/clients" onClick={() => setMobileMenuOpen(false)}>Clients</NavLink>
+                  </div>
+                </div>
+                
+                <NavLink to="/contact" onClick={() => setMobileMenuOpen(false)}>Contact</NavLink>
+              </nav>
+            </div>
           </div>
         )}
       </div>

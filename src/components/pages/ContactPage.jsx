@@ -1,4 +1,5 @@
 import { Mail, Phone, MapPin, Linkedin, Twitter,  Building2 } from 'lucide-react';
+import ContactWatermark from "../../assets/images/watermark/service1.jpeg";
 
 export function ContactPage() {
   const handleEmailClick = () => {
@@ -24,7 +25,11 @@ export function ContactPage() {
 
 
   return (
-    <div className="contact-page">
+    <div className="contact-page"
+      style={{
+        "--watermark": `url(${ContactWatermark})`,
+      }}
+    >
       <div className="contact-page__container">
         <h1> Contact Us </h1>
         <p> We're here to help you 24 hours a day </p>

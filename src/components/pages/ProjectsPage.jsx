@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Building, MapPin, FileText, Search, Filter, ChevronDown, ChevronUp } from 'lucide-react';
 import { projects, getCategoryColor, getTypeColor, getCategories } from '../../data/projects';
-
+import ProjectWatermark from "../../assets/images/watermark/home2.jpeg";
 
 export function ProjectPage () {
 
@@ -26,7 +26,11 @@ export function ProjectPage () {
   };
 
   return (
-    <div className="projects-container">
+    <div className="projects-container"
+      style={{
+        "--watermark": `url(${ProjectWatermark})`,
+      }} 
+    >
       <div className="projects-wrapper">
         {/* Header */}
         <div className="projects-header">

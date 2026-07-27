@@ -6,13 +6,18 @@ import {
   ArrowRight, Star, Award, TrendingUp 
 } from 'lucide-react';
 
+import ExperienceWatermark from "../../assets/images/watermark/home2.jpeg";
 
 export function ExperiencePage() {
   const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState('projects'); // 'projects' or 'clients'
 
   return (
-    <div className="experience-page">
+    <div className="experience-page"
+      style={{
+        "--watermark": `url(${ExperienceWatermark})`,
+      }}
+    >
       {/* Background Elements - already in your CSS */}
       <div className="experience-background">
         <div className="bg-gradient"></div>
@@ -37,14 +42,14 @@ export function ExperiencePage() {
         <div className="metric-item">
           <div className="metric-icon"><Briefcase /></div>
           <div className="metric-content">
-            <div className="metric-value">80+</div>
+            <div className="metric-value">20+</div>
             <div className="metric-label">Projects Completed</div>
           </div>
         </div>
         <div className="metric-item">
           <div className="metric-icon"><Users /></div>
           <div className="metric-content">
-            <div className="metric-value">85+</div>
+            <div className="metric-value">13+</div>
             <div className="metric-label">Happy Clients</div>
           </div>
         </div>
@@ -71,10 +76,6 @@ export function ExperiencePage() {
           <div className="card-background projects-bg"></div>
           <div className="card-header">
             <div className="card-icon"><Briefcase /></div>
-            <div className="card-counter">
-              <span className="counter-number">80+</span>
-              <span className="counter-label">Projects</span>
-            </div>
           </div>
           <div className="card-content">
             <h2 className="card-title">Our Projects</h2>
@@ -97,10 +98,6 @@ export function ExperiencePage() {
           <div className="card-background clients-bg"></div>
           <div className="card-header">
             <div className="card-icon"><Users /></div>
-            <div className="card-counter">
-              <span className="counter-number">85+</span>
-              <span className="counter-label">Clients</span>
-            </div>
           </div>
           <div className="card-content">
             <h2 className="card-title">Our Clients</h2>

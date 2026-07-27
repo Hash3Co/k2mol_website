@@ -4,6 +4,11 @@ import {
   CheckCircle, ArrowRight, Target, Shield, 
   Clock, Award, BarChart, FileText 
 } from 'lucide-react';
+import { Link } from 'react-router-dom';
+
+
+// Replace this with your actual watermark image path
+import servicesWatermark from '../../assets/images/services/service1.jpeg';
 
 export function ServicesSection() {
   const [activeService, setActiveService] = useState(0);
@@ -122,22 +127,29 @@ export function ServicesSection() {
         onClick={() => onClick(service.id)}
       >
         <div className={`service-icon ${service.iconColor}`}>
-          <IconComponent size={28} />
+          <IconComponent size={24} />
         </div>
-        <h3>{service.title}</h3>
-        <p className="card-description">{service.description}</p>
+        <div className="service-card-content">
+          <h3>{service.title}</h3>
+          <p className="card-description">{service.description}</p>
+        </div>
         <div className="card-indicator">
-          <ArrowRight size={20} />
+          <ArrowRight size={18} />
         </div>
       </div>
     );
   });
 
   return (
-    <div className='services-page'>
-      {/* Hero Header */}
+    <div className='services-page'
+        style={{
+        "--watermark": `url(${servicesWatermark})`,
+    }}
+    >
+     
+      {/* Hero Section */}
       <div className="services-hero">
-        <div className="hero-content">
+        <div className="services-hero-content">
           <div className="hero-badge">
             <span>Our Expertise</span>
           </div>
@@ -161,9 +173,7 @@ export function ServicesSection() {
             </p>
           </div>
           
-          {/* Services Navigation & Content */}
           <div className="services-container">
-            {/* Services Navigation */}
             <div className="services-navigation">
               {services.map((service) => (
                 <ServiceCard 
@@ -175,7 +185,6 @@ export function ServicesSection() {
               ))}
             </div>
             
-            {/* Active Service Details */}
             <div className="service-details">
               {services.filter(s => s.id === activeService).map((service) => {
                 const IconComponent = service.icon;
@@ -185,7 +194,7 @@ export function ServicesSection() {
                       <div className={`detail-icon ${service.iconColor}`}>
                         <IconComponent size={32} />
                       </div>
-                      <div>
+                      <div className="service-header-text">
                         <h2>{service.title}</h2>
                         <p className="service-description">{service.detailedDescription}</p>
                       </div>
@@ -217,6 +226,11 @@ export function ServicesSection() {
                       </div>
                     </div>
                     
+                    <div className="service-cta">
+                      <Link to="/contact" className="cta-button">
+                          Get Started <ArrowRight size={18} />
+                        </Link>
+                    </div>
                   </div>
                 );
               })}
@@ -231,6 +245,9 @@ export function ServicesSection() {
           <div className="section-header">
             <span className="section-subtitle">Additional Services</span>
             <h2>Complementary Solutions</h2>
+            <p className="section-intro">
+              Explore our full range of professional services designed to support your project at every stage
+            </p>
           </div>
           
           <div className="additional-grid">
@@ -256,6 +273,9 @@ export function ServicesSection() {
           <div className="section-header">
             <span className="section-subtitle">Our Process</span>
             <h2>How We Deliver Excellence</h2>
+            <p className="section-intro">
+              A structured approach that ensures quality and consistency across every project
+            </p>
           </div>
           
           <div className="process-steps">
