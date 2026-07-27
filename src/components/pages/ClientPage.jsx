@@ -1,9 +1,13 @@
 import { ClientsSection } from '../sections/ClientsSection';
 import { Building2, Users, Award } from 'lucide-react';
-
+import ClientWatermark from "../../assets/images/watermark/home2.jpeg";
 export function ClientPage() {
   return (
-    <div className="client-page">
+    <div className="client-page"
+     style={{
+        "--watermark": `url(${ClientWatermark})`,
+      }} 
+    >
       {/* Hero Section */}
       <div className="client-hero">
         <h1>Our Esteemed Clients</h1>
