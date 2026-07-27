@@ -23,9 +23,9 @@ export function Home() {
 
   const testimonials = [
     {
-      text: "Exceptional professionalism and expertise exceeded our expectations.",
+      text: "Presentation does not replace competence; it reveals it",
       author: "Bafokeng Moleko",
-      role: "Project Director",
+      role: "Director",
     },
   ];
 
