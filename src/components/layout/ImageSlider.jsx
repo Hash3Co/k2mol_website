@@ -1,4 +1,4 @@
-// ImageSlider.jsx - Complete fixed version with proper text animations
+// ImageSlider.jsx - Complete fixed version with proper path detection
 import React, { useState, useEffect, useRef, useCallback, memo } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { Menu, Phone, X, ChevronDown } from 'lucide-react';
@@ -132,6 +132,7 @@ const slideConfigs = {
         id: 0,
         image: servicesImage1,
         title: "What We Do",
+        description: "Comprehensive quantity surveying and consulting services for infrastructure development.",
         textPosition: { bottom: '12%', left: '8%' },
         textAlign: 'left',
         textWidth: '300px',
@@ -156,6 +157,7 @@ const slideConfigs = {
         id: 0,
         image: experienceImage4,
         title: "Our Journey",
+        description: "A track record of excellence spanning over a decade in the construction industry.",
         textPosition: { bottom: '12%', left: '8%' },
         textAlign: 'left',
         textWidth: '280px',
@@ -180,6 +182,7 @@ const slideConfigs = {
         id: 0,
         image: experienceImage4,
         title: "Our Work",
+        description: "Delivering exceptional construction and consulting projects across Southern Africa.",
         textPosition: { bottom: '12%', left: '8%' },
         textAlign: 'left',
         textWidth: '280px',
@@ -204,6 +207,7 @@ const slideConfigs = {
         id: 0,
         image: experienceImage1,
         title: "Our Clientele",
+        description: "Trusted by industry leaders across multiple sectors.",
         textPosition: { bottom: '12%', left: '8%' },
         textAlign: 'left',
         textWidth: '280px',
@@ -228,6 +232,7 @@ const slideConfigs = {
         id: 0,
         image: contactImage4,
         title: "Get In Touch",
+        description: "Get in touch with our experienced team for your construction needs.",
         textPosition: { bottom: '12%', left: '8%' },
         textAlign: 'left',
         textWidth: '300px',
@@ -263,15 +268,35 @@ export const ImageSlider = memo(function ImageSlider() {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [textVisible, setTextVisible] = useState(true);
-  const [textPhase, setTextPhase] = useState('visible'); // 'visible', 'entering', 'exiting'
+  const [textPhase, setTextPhase] = useState('visible');
   const [imagesReady, setImagesReady] = useState(false);
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
   
   const slideTimerRef = useRef(null);
   const transitionTimerRef = useRef(null);
   const textTimerRef = useRef(null);
+  const previousPathRef = useRef(currentPath);
   
-  // Preload images and set ready state
+  // Reset and load images when path changes
   useEffect(() => {
+    // Check if path actually changed
+    if (previousPathRef.current !== currentPath) {
+      previousPathRef.current = currentPath;
+      setIsFirstLoad(true);
+      setImagesReady(false);
+      setCurrentIndex(0);
+      setNextIndex(1);
+      setTextVisible(false);
+      setTextPhase('exiting');
+      setIsTransitioning(false);
+      
+      // Clear all timers
+      if (slideTimerRef.current) clearInterval(slideTimerRef.current);
+      if (transitionTimerRef.current) clearTimeout(transitionTimerRef.current);
+      if (textTimerRef.current) clearTimeout(textTimerRef.current);
+    }
+    
+    // Preload images for this path
     let mounted = true;
     let loadedCount = 0;
     const totalImages = slides.length;
@@ -283,18 +308,40 @@ export const ImageSlider = memo(function ImageSlider() {
         loadedCount++;
         if (mounted && loadedCount === totalImages) {
           setImagesReady(true);
+          // Show text with animation after images load
+          setTimeout(() => {
+            setTextVisible(true);
+            setTextPhase('entering');
+            setTimeout(() => {
+              setTextPhase('visible');
+              setIsFirstLoad(false);
+            }, 1200);
+          }, 300);
         }
       };
       img.onerror = () => {
         loadedCount++;
         if (mounted && loadedCount === totalImages) {
           setImagesReady(true);
+          setTimeout(() => {
+            setTextVisible(true);
+            setTextPhase('entering');
+            setTimeout(() => {
+              setTextPhase('visible');
+              setIsFirstLoad(false);
+            }, 1200);
+          }, 300);
         }
       };
     });
     
-    return () => { mounted = false; };
-  }, [slides]);
+    return () => { 
+      mounted = false;
+      if (slideTimerRef.current) clearInterval(slideTimerRef.current);
+      if (transitionTimerRef.current) clearTimeout(transitionTimerRef.current);
+      if (textTimerRef.current) clearTimeout(textTimerRef.current);
+    };
+  }, [currentPath, slides]);
 
   const getImagePosition = (slide) => {
     if (!slide?.imagePosition) return 'center center';
@@ -307,27 +354,24 @@ export const ImageSlider = memo(function ImageSlider() {
 
   // Change slide with synchronized transition
   const changeSlide = useCallback(() => {
-    if (isTransitioning || !imagesReady) return;
+    if (isTransitioning || !imagesReady || slides.length <= 1) return;
     
     const next = (currentIndex + 1) % slides.length;
     setNextIndex(next);
     setIsTransitioning(true);
     setTextPhase('exiting');
     
-    // Hide text quickly
     if (textTimerRef.current) clearTimeout(textTimerRef.current);
     textTimerRef.current = setTimeout(() => {
       setTextVisible(false);
     }, 400);
     
-    // After transition, update current and show text
     if (transitionTimerRef.current) clearTimeout(transitionTimerRef.current);
     transitionTimerRef.current = setTimeout(() => {
       setCurrentIndex(next);
       setTextVisible(true);
       setTextPhase('entering');
       
-      // After text enters, mark transition complete
       setTimeout(() => {
         setTextPhase('visible');
         setIsTransitioning(false);
@@ -339,7 +383,7 @@ export const ImageSlider = memo(function ImageSlider() {
 
   // Auto-play
   useEffect(() => {
-    if (slides.length <= 1 || !imagesReady) return;
+    if (slides.length <= 1 || !imagesReady || isFirstLoad) return;
     
     slideTimerRef.current = setInterval(() => {
       if (!isTransitioning) {
@@ -350,28 +394,19 @@ export const ImageSlider = memo(function ImageSlider() {
     return () => {
       if (slideTimerRef.current) clearInterval(slideTimerRef.current);
     };
-  }, [changeSlide, slides.length, slideInterval, isTransitioning, imagesReady]);
-
-  // Cleanup
-  useEffect(() => {
-    return () => {
-      if (slideTimerRef.current) clearInterval(slideTimerRef.current);
-      if (transitionTimerRef.current) clearTimeout(transitionTimerRef.current);
-      if (textTimerRef.current) clearTimeout(textTimerRef.current);
-    };
-  }, []);
+  }, [changeSlide, slides.length, slideInterval, isTransitioning, imagesReady, isFirstLoad]);
 
   // Go to specific slide
   const goToSlide = (index) => {
     if (index === currentIndex || isTransitioning || !imagesReady) return;
-    // Reset timer
+    
     if (slideTimerRef.current) {
       clearInterval(slideTimerRef.current);
       slideTimerRef.current = setInterval(() => {
         if (!isTransitioning) changeSlide();
       }, slideInterval);
     }
-    // Force change
+    
     const next = index;
     setNextIndex(next);
     setIsTransitioning(true);
@@ -394,17 +429,6 @@ export const ImageSlider = memo(function ImageSlider() {
     }, transitionDuration);
   };
 
-  // Force text animation on mount
-  useEffect(() => {
-    if (imagesReady) {
-      setTextVisible(true);
-      setTextPhase('entering');
-      setTimeout(() => {
-        setTextPhase('visible');
-      }, 1200);
-    }
-  }, [imagesReady, currentPath]);
-
   const heroClass = isFullScreen ? 'hero hero-fullscreen' : 'hero hero-banner';
   
   const currentSlide = slides[currentIndex];
@@ -413,7 +437,6 @@ export const ImageSlider = memo(function ImageSlider() {
   const currentImagePos = getImagePosition(currentSlide);
   const nextImagePos = getImagePosition(nextSlide);
 
-  // Split title for vertical display
   const renderTitle = (title) => {
     if (!title) return null;
     const lines = title.split('\n');
@@ -443,7 +466,7 @@ export const ImageSlider = memo(function ImageSlider() {
 
   return (
     <section className={heroClass}>
-      {/* Image Stack - Synchronized transition */}
+      {/* Image Stack */}
       <div className="hero-image-stack">
         {/* Current Image */}
         <div 
@@ -466,7 +489,7 @@ export const ImageSlider = memo(function ImageSlider() {
           />
         </div>
         
-        {/* Next Image - Fading in */}
+        {/* Next Image */}
         <div 
           className={`hero-slide-wrapper hero-slide-next ${isTransitioning ? 'entering' : ''}`}
           style={{
@@ -529,7 +552,7 @@ export const ImageSlider = memo(function ImageSlider() {
           </div>
         </div>
 
-        {/* Hero Content - Positioned below header with bottom-up animation */}
+        {/* Hero Content */}
         <div className="hero-content-wrapper">
           {isFullScreen ? (
             <div 
@@ -618,7 +641,7 @@ export const ImageSlider = memo(function ImageSlider() {
           )}
         </div>
 
-        {/* Indicators - Only on fullscreen pages */}
+        {/* Indicators */}
         {isFullScreen && slides.length > 1 && (
           <div className="hero-indicators">
             {slides.map((_, index) => (
