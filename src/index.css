@@ -1065,7 +1065,7 @@ img { max-width: 100%; display: block; }
   font-weight: 800;
   color: var(--white);
   margin-bottom: 0.8rem;
-  line-height: 1.0.5;
+  line-height: 1.05;
 }
 
 .hero-section .highlight {
