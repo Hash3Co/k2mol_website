@@ -20,8 +20,9 @@ export function Footer() {
                     src={logo}
                     alt="K2MOL Consulting"
                     className="footer-logo"
-                    loading="lazy"
+                    loading="eager"
                     decoding="async"
+                    fetchpriority="high"
                     onError={() => setLogoError(true)}
                     onLoad={() => setLogoLoaded(true)}
                     style={{
@@ -103,7 +104,7 @@ export function Footer() {
         </div>
         
         <div className="footer-copyright">
-          <p>&copy; {new Date().getFullYear()} Hash & Co. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} K2MOL Consulting. All rights reserved.</p>
         </div>
       </div>
     </footer>

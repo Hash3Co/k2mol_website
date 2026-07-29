@@ -27,7 +27,8 @@ export function SponsorBand() {
                 src={sponsor.logo} 
                 alt={sponsor.name} 
                 className="sponsor-logo"
-                loading="lazy"
+                loading="eager"
+                decoding="async"
               />
             </a>
           ))}

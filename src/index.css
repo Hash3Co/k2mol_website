@@ -5029,3 +5029,74 @@ main {
     width: 100% !important;
   }
 }
+
+/* ============================================
+   FORCE TEXT ANIMATIONS ON PAGE LOAD
+   ============================================ */
+
+/* Reset animation states for fresh entries */
+.hero-title,
+.banner-title,
+.hero-description,
+.banner-description {
+  animation: none !important;
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+.text-entering .hero-title,
+.text-entering .banner-title {
+  animation: bottomUpIn 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards !important;
+  opacity: 0;
+  transform: translateY(60px);
+}
+
+.text-entering .hero-description,
+.text-entering .banner-description {
+  animation: bottomUpIn 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards !important;
+  opacity: 0;
+  transform: translateY(50px);
+  animation-delay: 0.3s !important;
+}
+
+.text-visible .hero-title,
+.text-visible .banner-title,
+.text-visible .hero-description,
+.text-visible .banner-description {
+  opacity: 1 !important;
+  transform: translateY(0) scale(1) !important;
+}
+
+.text-exiting .hero-title,
+.text-exiting .banner-title {
+  animation: textExitDown 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
+  opacity: 1;
+}
+
+.text-exiting .hero-description,
+.text-exiting .banner-description {
+  animation: textExitDown 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.15s forwards !important;
+  opacity: 1;
+}
+
+@keyframes bottomUpIn {
+  0% {
+    opacity: 0;
+    transform: translateY(60px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes textExitDown {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(40px) scale(0.97);
+  }
+}

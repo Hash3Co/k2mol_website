@@ -1,5 +1,5 @@
-// ImageSlider.jsx - Complete fixed version with bottom-up text and proper positioning
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+// ImageSlider.jsx - Complete fixed version with proper text animations
+import React, { useState, useEffect, useRef, useCallback, memo } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { Menu, Phone, X, ChevronDown } from 'lucide-react';
 
@@ -132,6 +132,7 @@ const slideConfigs = {
         id: 0,
         image: servicesImage1,
         title: "What We Do",
+        description: "Comprehensive quantity surveying and consulting services for infrastructure development.",
         textPosition: { bottom: '12%', left: '8%' },
         textAlign: 'left',
         textWidth: '300px',
@@ -156,6 +157,7 @@ const slideConfigs = {
         id: 0,
         image: experienceImage4,
         title: "Our Journey",
+        description: "A track record of excellence spanning over a decade in the construction industry.",
         textPosition: { bottom: '12%', left: '8%' },
         textAlign: 'left',
         textWidth: '280px',
@@ -180,6 +182,7 @@ const slideConfigs = {
         id: 0,
         image: experienceImage4,
         title: "Our Work",
+        description: "Delivering exceptional construction and consulting projects across Southern Africa.",
         textPosition: { bottom: '12%', left: '8%' },
         textAlign: 'left',
         textWidth: '280px',
@@ -203,7 +206,7 @@ const slideConfigs = {
       {
         id: 0,
         image: experienceImage1,
-        title: "Our Clientel",
+        title: "Our Clientele",
         description: "Trusted by industry leaders across multiple sectors.",
         textPosition: { bottom: '12%', left: '8%' },
         textAlign: 'left',
@@ -250,7 +253,7 @@ const slideConfigs = {
   },
 };
 
-export function ImageSlider() {
+export const ImageSlider = memo(function ImageSlider() {
   const location = useLocation();
   const currentPath = location.pathname.toLowerCase();
   
@@ -265,13 +268,39 @@ export function ImageSlider() {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [textVisible, setTextVisible] = useState(true);
-  const [textPhase, setTextPhase] = useState('visible');
-  const [loadedImages, setLoadedImages] = useState([]);
+  const [textPhase, setTextPhase] = useState('visible'); // 'visible', 'entering', 'exiting'
+  const [imagesReady, setImagesReady] = useState(false);
   
   const slideTimerRef = useRef(null);
   const transitionTimerRef = useRef(null);
   const textTimerRef = useRef(null);
   
+  // Preload images and set ready state
+  useEffect(() => {
+    let mounted = true;
+    let loadedCount = 0;
+    const totalImages = slides.length;
+    
+    slides.forEach(slide => {
+      const img = new Image();
+      img.src = slide.image;
+      img.onload = () => {
+        loadedCount++;
+        if (mounted && loadedCount === totalImages) {
+          setImagesReady(true);
+        }
+      };
+      img.onerror = () => {
+        loadedCount++;
+        if (mounted && loadedCount === totalImages) {
+          setImagesReady(true);
+        }
+      };
+    });
+    
+    return () => { mounted = false; };
+  }, [slides]);
+
   const getImagePosition = (slide) => {
     if (!slide?.imagePosition) return 'center center';
     const pos = slide.imagePosition;
@@ -281,27 +310,9 @@ export function ImageSlider() {
     return pos.mobile || pos.tablet || pos.laptop || pos.desktop || 'center center';
   };
 
-  // Preload images
-  useEffect(() => {
-    let mounted = true;
-    Promise.all(
-      slides.map(slide => {
-        return new Promise((resolve) => {
-          const img = new Image();
-          img.src = slide.image;
-          img.onload = () => resolve();
-          img.onerror = () => resolve();
-        });
-      })
-    ).then(() => {
-      if (mounted) setLoadedImages(slides);
-    });
-    return () => { mounted = false; };
-  }, [slides]);
-
   // Change slide with synchronized transition
   const changeSlide = useCallback(() => {
-    if (isTransitioning) return;
+    if (isTransitioning || !imagesReady) return;
     
     const next = (currentIndex + 1) % slides.length;
     setNextIndex(next);
@@ -329,11 +340,11 @@ export function ImageSlider() {
       
     }, transitionDuration);
     
-  }, [currentIndex, slides.length, isTransitioning, transitionDuration]);
+  }, [currentIndex, slides.length, isTransitioning, transitionDuration, imagesReady]);
 
   // Auto-play
   useEffect(() => {
-    if (slides.length <= 1) return;
+    if (slides.length <= 1 || !imagesReady) return;
     
     slideTimerRef.current = setInterval(() => {
       if (!isTransitioning) {
@@ -344,7 +355,7 @@ export function ImageSlider() {
     return () => {
       if (slideTimerRef.current) clearInterval(slideTimerRef.current);
     };
-  }, [changeSlide, slides.length, slideInterval, isTransitioning]);
+  }, [changeSlide, slides.length, slideInterval, isTransitioning, imagesReady]);
 
   // Cleanup
   useEffect(() => {
@@ -357,7 +368,7 @@ export function ImageSlider() {
 
   // Go to specific slide
   const goToSlide = (index) => {
-    if (index === currentIndex || isTransitioning) return;
+    if (index === currentIndex || isTransitioning || !imagesReady) return;
     // Reset timer
     if (slideTimerRef.current) {
       clearInterval(slideTimerRef.current);
@@ -388,6 +399,17 @@ export function ImageSlider() {
     }, transitionDuration);
   };
 
+  // Force text animation on mount
+  useEffect(() => {
+    if (imagesReady) {
+      setTextVisible(true);
+      setTextPhase('entering');
+      setTimeout(() => {
+        setTextPhase('visible');
+      }, 1200);
+    }
+  }, [imagesReady, currentPath]);
+
   const heroClass = isFullScreen ? 'hero hero-fullscreen' : 'hero hero-banner';
   
   const currentSlide = slides[currentIndex];
@@ -410,6 +432,20 @@ export function ImageSlider() {
     return slide.textPosition;
   };
 
+  if (!imagesReady) {
+    return (
+      <section className={heroClass} style={{ background: '#0a0a0a' }}>
+        <div className="hero-overlay">
+          <div className="hero-header">
+            <div className="header-brand">
+              <h1>K2MOL Consulting</h1>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className={heroClass}>
       {/* Image Stack - Synchronized transition */}
@@ -430,6 +466,8 @@ export function ImageSlider() {
             style={{
               objectPosition: currentImagePos,
             }}
+            loading="eager"
+            fetchpriority="high"
           />
         </div>
         
@@ -449,6 +487,8 @@ export function ImageSlider() {
             style={{
               objectPosition: nextImagePos,
             }}
+            loading="eager"
+            fetchpriority="high"
           />
         </div>
       </div>
@@ -503,7 +543,7 @@ export function ImageSlider() {
                 position: 'absolute',
                 inset: 0,
                 pointerEvents: 'none',
-                paddingTop: '80px', // Space for header
+                paddingTop: '80px',
               }}
             >
               <div 
@@ -548,7 +588,7 @@ export function ImageSlider() {
               style={{
                 opacity: textVisible ? 1 : 0,
                 transition: `opacity 400ms cubic-bezier(0.4, 0, 0.2, 1)`,
-                paddingTop: '80px', // Space for header
+                paddingTop: '80px',
               }}
             >
               <div style={{ 
@@ -633,4 +673,4 @@ export function ImageSlider() {
       </div>
     </section>
   );
-}
+});
