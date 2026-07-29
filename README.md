@@ -1,32 +1,16 @@
 K2MOL Consulting - Website Documentation
 "Precision in Quantity Surveying"
 
-📋 Table of Contents
-Overview
+Table of Contents
 
-Project Structure
+Overview
 
 Technology Stack
 
-Installation & Setup
-
-Development Workflow
-
-Key Features
-
-Page Structure
-
-Image Management
-
-Styling Guide
-
-Deployment
-
-Troubleshooting
-
-Contact
+Development Tools
 
 Overview
+
 K2MOL Consulting is a professional quantity surveying and construction consulting firm established in 2017. This website serves as the digital presence for the company, showcasing their expertise in cost management, project consulting, and infrastructure development across South Africa.
 
 Technology Stack
