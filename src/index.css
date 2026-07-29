@@ -165,9 +165,9 @@ img { max-width: 100%; display: block; }
 .hero-banner {
   position: relative;
   width: 100%;
-  height: 40vh;
-  min-height: 300px;
-  max-height: 450px;
+  height: 45vh;
+  min-height: 350px;
+  max-height: 520px;
   overflow: hidden;
   background: var(--black);
 }
@@ -985,19 +985,12 @@ img { max-width: 100%; display: block; }
   content: "";
   position: fixed;
   inset: 0;
-
   background-image: var(--watermark);
   background-repeat: no-repeat;
   background-position: center;
   background-size: 80%;
-
   opacity: 0.06;
-
-  filter:
-    grayscale(100%)
-    brightness(1.08)
-    contrast(.95);
-
+  filter: grayscale(100%) brightness(1.08) contrast(.95);
   pointer-events: none;
   z-index: -1;
 }
@@ -1434,19 +1427,12 @@ img { max-width: 100%; display: block; }
   content: "";
   position: fixed;
   inset: 0;
-
   background-image: var(--watermark);
   background-repeat: no-repeat;
   background-position: center;
   background-size: 75%;
-
   opacity: 0.07;
-
-  filter:
-    grayscale(100%)
-    brightness(1.05)
-    contrast(0.95);
-
+  filter: grayscale(100%) brightness(1.05) contrast(0.95);
   pointer-events: none;
   z-index: -1;
 }
@@ -3972,5 +3958,1074 @@ main {
   .client-page::before,
   .contact-page::before {
     position: absolute;
+  }
+}
+
+/* ============================================
+   PREMIUM CINEMATIC SLIDER - WBHO STYLE - UPDATED
+   ============================================ */
+
+/* Hero Containers */
+.hero-fullscreen {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 600px;
+  max-height: 100vh;
+  overflow: hidden;
+  background: #0a0a0a;
+  isolation: isolate;
+}
+
+.hero-banner {
+  position: relative;
+  width: 100%;
+  height: 45vh;
+  min-height: 350px;
+  max-height: 520px;
+  overflow: hidden;
+  background: #0a0a0a;
+  isolation: isolate;
+}
+
+/* Image Stack - Continuous motion */
+.hero-image-stack {
+  position: absolute;
+  inset: -2%;
+  overflow: hidden;
+  z-index: 1;
+  width: 104%;
+  height: 104%;
+  top: -2%;
+  left: -2%;
+}
+
+.hero-slide-wrapper {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  will-change: transform, opacity;
+}
+
+/* Images - Oversized for perfect coverage */
+.hero-slide-image {
+  position: absolute;
+  inset: -5%;
+  width: 110%;
+  height: 110%;
+  object-fit: cover;
+  transform-origin: center center;
+  display: block;
+  backface-visibility: hidden;
+  will-change: transform, opacity, filter;
+  image-rendering: auto;
+  filter: brightness(0.92) contrast(1.04) saturate(1.02);
+}
+
+/* ============================================
+   KEN BURNS MOTIONS - Continuous never reset
+   ============================================ */
+
+.motion-pan-right {
+  animation: panRight 22s linear forwards;
+}
+
+@keyframes panRight {
+  0% { transform: scale(1.02) translate3d(0, 0, 0); }
+  100% { transform: scale(1.10) translate3d(-3%, 0, 0); }
+}
+
+.motion-pan-left {
+  animation: panLeft 22s linear forwards;
+}
+
+@keyframes panLeft {
+  0% { transform: scale(1.02) translate3d(0, 0, 0); }
+  100% { transform: scale(1.10) translate3d(3%, 0, 0); }
+}
+
+.motion-zoom-center {
+  animation: zoomCenter 22s linear forwards;
+}
+
+@keyframes zoomCenter {
+  0% { transform: scale(1.02) translate3d(0, 0, 0); }
+  100% { transform: scale(1.10) translate3d(0, 0, 0); }
+}
+
+.motion-pan-diagonal {
+  animation: panDiagonal 22s linear forwards;
+}
+
+@keyframes panDiagonal {
+  0% { transform: scale(1.02) translate3d(0, 0, 0); }
+  100% { transform: scale(1.10) translate3d(-2%, -1%, 0); }
+}
+
+/* ============================================
+   TEXT POSITIONING - Anchored to edges
+   ============================================ */
+
+.hero-content-wrapper {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.hero-text-container {
+  position: absolute;
+  pointer-events: auto;
+  width: auto;
+  padding: 0;
+}
+
+/* Title styling for vertical flow */
+.hero-title,
+.banner-title {
+  font-family: var(--font-primary);
+  font-weight: 700;
+  color: var(--white);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 40px rgba(0, 0, 0, 0.3);
+  margin: 0;
+}
+
+.hero-title {
+  font-size: clamp(2.8rem, 6vw, 5.5rem);
+  margin-bottom: 0.5rem;
+}
+
+.banner-title {
+  font-size: clamp(2.8rem, 4.5vw, 4rem);
+  margin-bottom: 0.5rem;
+}
+
+.title-line {
+  display: block;
+}
+
+/* Description styling */
+.hero-description,
+.banner-description {
+  font-size: clamp(1rem, 1.2vw, 1.35rem);
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.6;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 30px rgba(0, 0, 0, 0.15);
+  margin: 0;
+  max-width: 100%;
+}
+
+/* ============================================
+   TEXT ENTRY ANIMATIONS - Per slide variety
+   ============================================ */
+
+.entry-slide-right {
+  animation: slideRightIn 1.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  opacity: 0;
+}
+
+@keyframes slideRightIn {
+  from { opacity: 0; transform: translateX(-80px) scale(0.98); }
+  to { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+.entry-slide-left {
+  animation: slideLeftIn 1.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  opacity: 0;
+}
+
+@keyframes slideLeftIn {
+  from { opacity: 0; transform: translateX(80px) scale(0.98); }
+  to { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+.entry-fade-up {
+  animation: fadeUpIn 1.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  opacity: 0;
+}
+
+@keyframes fadeUpIn {
+  from { opacity: 0; transform: translateY(60px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.entry-diagonal {
+  animation: diagonalIn 1.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  opacity: 0;
+}
+
+@keyframes diagonalIn {
+  from { opacity: 0; transform: translate(-60px, 60px) scale(0.96); }
+  to { opacity: 1; transform: translate(0, 0) scale(1); }
+}
+
+/* ============================================
+   TEXT STATES
+   ============================================ */
+
+.text-visible .hero-title,
+.text-visible .banner-title,
+.text-visible .hero-description,
+.text-visible .banner-description {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.text-exiting .hero-title,
+.text-exiting .banner-title {
+  animation: textExitUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.text-exiting .hero-description,
+.text-exiting .banner-description {
+  animation: textExitUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.15s forwards;
+}
+
+@keyframes textExitUp {
+  from { opacity: 1; transform: translateY(0) scale(1); }
+  to { opacity: 0; transform: translateY(-40px) scale(0.97); }
+}
+
+.text-entering .hero-title,
+.text-entering .banner-title {
+  animation: fadeUpIn 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  opacity: 0;
+}
+
+.text-entering .hero-description,
+.text-entering .banner-description {
+  animation: fadeUpIn 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  opacity: 0;
+}
+
+/* ============================================
+   OVERLAY - Premium cinematic gradient
+   ============================================ */
+
+.hero-overlay-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    rgba(0, 5, 15, 0.55) 0%,
+    rgba(0, 5, 15, 0.25) 30%,
+    rgba(0, 5, 15, 0.05) 60%,
+    rgba(0, 0, 0, 0.02) 100%
+  );
+  z-index: 0;
+}
+
+.hero-overlay-soft {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 255, 255, 0.02) 0%,
+    rgba(0, 0, 0, 0.08) 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ============================================
+   RESPONSIVE IMAGE POSITIONING
+   ============================================ */
+
+/* Desktop default - handled by inline styles */
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .hero-fullscreen { min-height: 550px; }
+  .hero-title { font-size: clamp(2.4rem, 5vw, 3.8rem); }
+  .hero-description { font-size: clamp(0.95rem, 1.2vw, 1.1rem); }
+  .hero-text-container { max-width: 280px; }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .hero-fullscreen { min-height: 500px; }
+  .hero-title { font-size: clamp(1.8rem, 4.5vw, 2.6rem); }
+  .hero-description { font-size: clamp(0.85rem, 1.2vw, 1rem); }
+  .hero-text-container { max-width: 240px; }
+  
+  /* Center text on mobile for readability */
+  .hero-text-container {
+    left: 50% !important;
+    right: auto !important;
+    top: 50% !important;
+    bottom: auto !important;
+    transform: translate(-50%, -50%) !important;
+    text-align: center !important;
+    max-width: 80% !important;
+  }
+  
+  .hero-text-container .hero-title,
+  .hero-text-container .hero-description {
+    text-align: center !important;
+  }
+  
+  .hero-banner-content {
+    padding: 0 1.5rem;
+  }
+  
+  .hero-banner-content .banner-title {
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
+  }
+}
+
+/* Small mobile */
+@media (max-width: 480px) {
+  .hero-fullscreen { min-height: 420px; }
+  .hero-title { font-size: clamp(1.4rem, 4vw, 1.8rem); }
+  .hero-description { font-size: clamp(0.75rem, 1vw, 0.85rem); }
+  .hero-text-container { max-width: 90%; }
+  .hero-banner { min-height: 200px; max-height: 280px; }
+}
+
+/* ============================================
+   INDICATORS - Sync with transition
+   ============================================ */
+
+.hero-indicators {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 12px;
+  z-index: 10;
+}
+
+.indicator {
+  width: 40px;
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  border: none;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.3s ease;
+}
+
+.indicator:hover { background: rgba(255, 255, 255, 0.35); }
+.indicator.active { background: rgba(255, 255, 255, 0.15); }
+
+.indicator-progress {
+  display: block;
+  height: 100%;
+  background: var(--primary-light);
+  border-radius: 2px;
+  width: 0%;
+}
+
+.indicator.active .indicator-progress {
+  animation: progressFill 9s linear forwards;
+}
+
+@keyframes progressFill {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}
+
+/* ============================================
+   REDUCED MOTION
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-slide-image { animation: none !important; transform: scale(1) !important; }
+  .indicator.active .indicator-progress { animation: none !important; width: 100% !important; }
+  .entry-slide-right, .entry-slide-left, .entry-fade-up, .entry-diagonal {
+    animation: none !important; opacity: 1 !important; transform: none !important;
+  }
+  .text-exiting .hero-title, .text-exiting .banner-title,
+  .text-exiting .hero-description, .text-exiting .banner-description {
+    animation: none !important; opacity: 0 !important;
+  }
+  .text-entering .hero-title, .text-entering .banner-title,
+  .text-entering .hero-description, .text-entering .banner-description {
+    animation: none !important; opacity: 1 !important;
+  }
+}
+
+/* ============================================
+   BOTTOM-UP TEXT ENTRY ANIMATIONS
+   ============================================ */
+
+/* Bottom Up - Title slides up from bottom */
+.entry-bottom-up {
+  animation: bottomUpIn 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  opacity: 0;
+  transform: translateY(60px);
+}
+
+@keyframes bottomUpIn {
+  0% {
+    opacity: 0;
+    transform: translateY(60px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Bottom Up Delayed - Description slides up with delay */
+.entry-bottom-up-delayed {
+  animation: bottomUpIn 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  opacity: 0;
+  transform: translateY(50px);
+  animation-delay: 0.3s;
+}
+
+/* Text Exit - Slides down when leaving */
+.text-exiting .hero-title,
+.text-exiting .banner-title {
+  animation: textExitDown 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  opacity: 1;
+}
+
+.text-exiting .hero-description,
+.text-exiting .banner-description {
+  animation: textExitDown 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.15s forwards;
+  opacity: 1;
+}
+
+@keyframes textExitDown {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(40px) scale(0.97);
+  }
+}
+
+/* Text Entering - Slides up when appearing */
+.text-entering .hero-title,
+.text-entering .banner-title {
+  animation: bottomUpIn 1.0s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  opacity: 0;
+  transform: translateY(50px);
+}
+
+.text-entering .hero-description,
+.text-entering .banner-description {
+  animation: bottomUpIn 1.0s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  opacity: 0;
+  transform: translateY(40px);
+  animation-delay: 0.2s;
+}
+
+/* ============================================
+   TEXT POSITIONING - Bottom anchored
+   ============================================ */
+
+.hero-text-container {
+  position: absolute;
+  pointer-events: auto;
+  width: auto;
+  padding: 0;
+}
+
+/* Text visible state */
+.text-visible .hero-title,
+.text-visible .banner-title,
+.text-visible .hero-description,
+.text-visible .banner-description {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* ============================================
+   COLOR TRANSITIONS FOR TITLES
+   ============================================ */
+
+.hero-title,
+.banner-title {
+  transition: color 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hero-description,
+.banner-description {
+  transition: color 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ============================================
+   RESPONSIVE - Mobile adjustments
+   ============================================ */
+
+@media (max-width: 768px) {
+  .hero-text-container {
+    left: 50% !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: 15% !important;
+    transform: translateX(-50%) !important;
+    text-align: center !important;
+    max-width: 85% !important;
+  }
+  
+  .hero-text-container .hero-title,
+  .hero-text-container .hero-description {
+    text-align: center !important;
+  }
+  
+  .hero-title {
+    font-size: clamp(1.8rem, 4.5vw, 2.6rem);
+  }
+  
+  .hero-description {
+    font-size: clamp(0.85rem, 1.2vw, 1rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-text-container {
+    bottom: 12% !important;
+    max-width: 90% !important;
+  }
+  
+  .hero-title {
+    font-size: clamp(1.4rem, 4vw, 1.8rem);
+  }
+  
+  .hero-description {
+    font-size: clamp(0.75rem, 1vw, 0.85rem);
+  }
+}
+
+/* ============================================
+   IMAGE TRANSITION - Synchronized
+   ============================================ */
+
+.hero-slide-current.exiting {
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 2800ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hero-slide-next.entering {
+  z-index: 3;
+  opacity: 1;
+  transition: opacity 2800ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hero-slide-next {
+  opacity: 0;
+  z-index: 1;
+}
+
+.hero-slide-current {
+  opacity: 1;
+  z-index: 2;
+}
+
+/* ============================================
+   INDICATORS - Updated timing
+   ============================================ */
+
+.indicator.active .indicator-progress {
+  animation: progressFill 10s linear forwards;
+}
+
+@keyframes progressFill {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}
+
+/* ============================================
+   REDUCED MOTION
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .entry-bottom-up,
+  .entry-bottom-up-delayed {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  
+  .text-exiting .hero-title,
+  .text-exiting .banner-title,
+  .text-exiting .hero-description,
+  .text-exiting .banner-description {
+    animation: none !important;
+    opacity: 0 !important;
+    transform: none !important;
+  }
+  
+  .text-entering .hero-title,
+  .text-entering .banner-title,
+  .text-entering .hero-description,
+  .text-entering .banner-description {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  
+  .hero-slide-image {
+    animation: none !important;
+    transform: scale(1) !important;
+  }
+  
+  .indicator.active .indicator-progress {
+    animation: none !important;
+    width: 100% !important;
+  }
+}
+
+/* ============================================
+   FIXED: HEADER AND TEXT POSITIONING
+   ============================================ */
+
+/* Header - Stays on top */
+.hero-header {
+  position: relative;
+  z-index: 20 !important;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  opacity: 0.95;
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: auto;
+}
+
+.hero-header:hover {
+  opacity: 1;
+}
+
+/* Overlay - Proper stacking */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 2.5rem;
+  pointer-events: none;
+}
+
+.hero-overlay > * {
+  pointer-events: auto;
+}
+
+/* Content wrapper - Below header */
+.hero-content-wrapper {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  padding-top: 80px; /* Space for header */
+}
+
+.hero-content-wrapper > * {
+  pointer-events: auto;
+}
+
+/* Text container - Bottom positioned */
+.hero-text-container {
+  position: absolute;
+  pointer-events: auto;
+  width: auto;
+  padding: 0;
+}
+
+/* Banner content - For non-fullscreen */
+.hero-banner-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  padding-top: 80px; /* Space for header */
+  width: 100%;
+  position: relative;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.hero-banner-content > * {
+  pointer-events: auto;
+}
+
+/* ============================================
+   BOTTOM-UP TEXT ENTRY ANIMATIONS
+   ============================================ */
+
+/* Entry - Slides up from bottom */
+.entry-bottom-up {
+  animation: bottomUpIn 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  opacity: 0;
+  transform: translateY(60px);
+}
+
+@keyframes bottomUpIn {
+  0% {
+    opacity: 0;
+    transform: translateY(60px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Entry delayed - Description slides up after title */
+.entry-bottom-up-delayed {
+  animation: bottomUpIn 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  opacity: 0;
+  transform: translateY(50px);
+  animation-delay: 0.3s;
+}
+
+/* Exit - Slides down when leaving */
+.text-exiting .hero-title,
+.text-exiting .banner-title {
+  animation: textExitDown 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  opacity: 1;
+}
+
+.text-exiting .hero-description,
+.text-exiting .banner-description {
+  animation: textExitDown 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.15s forwards;
+  opacity: 1;
+}
+
+@keyframes textExitDown {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(40px) scale(0.97);
+  }
+}
+
+/* Entering - Slides up when appearing */
+.text-entering .hero-title,
+.text-entering .banner-title {
+  animation: bottomUpIn 1.0s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  opacity: 0;
+  transform: translateY(50px);
+}
+
+.text-entering .hero-description,
+.text-entering .banner-description {
+  animation: bottomUpIn 1.0s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  opacity: 0;
+  transform: translateY(40px);
+  animation-delay: 0.2s;
+}
+
+/* Visible state */
+.text-visible .hero-title,
+.text-visible .banner-title,
+.text-visible .hero-description,
+.text-visible .banner-description {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* ============================================
+   TITLE STYLES - Vertical flow
+   ============================================ */
+
+.hero-title,
+.banner-title {
+  font-family: var(--font-primary);
+  font-weight: 700;
+  color: var(--white);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 40px rgba(0, 0, 0, 0.3);
+  margin: 0;
+  transition: color 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hero-title {
+  font-size: clamp(2.8rem, 6vw, 5.5rem);
+  margin-bottom: 0.5rem;
+}
+
+.banner-title {
+  font-size: clamp(2.8rem, 4.5vw, 4rem);
+  margin-bottom: 0.5rem;
+}
+
+.title-line {
+  display: block;
+}
+
+.hero-description,
+.banner-description {
+  font-size: clamp(1rem, 1.2vw, 1.35rem);
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.6;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 30px rgba(0, 0, 0, 0.15);
+  margin: 0;
+  max-width: 100%;
+  transition: color 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ============================================
+   RESPONSIVE - Mobile adjustments
+   ============================================ */
+
+@media (max-width: 1024px) {
+  .hero-title {
+    font-size: clamp(2.4rem, 5vw, 3.8rem);
+  }
+  .hero-description {
+    font-size: clamp(0.95rem, 1.2vw, 1.1rem);
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-overlay {
+    padding: 0.75rem 1rem;
+  }
+  
+  .hero-content-wrapper {
+    padding-top: 60px;
+  }
+  
+  .hero-banner-content {
+    padding-top: 60px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .hero-text-container {
+    left: 50% !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: 15% !important;
+    transform: translateX(-50%) !important;
+    text-align: center !important;
+    max-width: 85% !important;
+  }
+  
+  .hero-text-container .hero-title,
+  .hero-text-container .hero-description {
+    text-align: center !important;
+  }
+  
+  .hero-title {
+    font-size: clamp(1.8rem, 4.5vw, 2.6rem);
+  }
+  
+  .hero-description {
+    font-size: clamp(0.85rem, 1.2vw, 1rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-content-wrapper {
+    padding-top: 50px;
+  }
+  
+  .hero-banner-content {
+    padding-top: 50px;
+  }
+  
+  .hero-text-container {
+    bottom: 12% !important;
+    max-width: 90% !important;
+  }
+  
+  .hero-title {
+    font-size: clamp(1.4rem, 4vw, 1.8rem);
+  }
+  
+  .hero-description {
+    font-size: clamp(0.75rem, 1vw, 0.85rem);
+  }
+}
+
+/* ============================================
+   INDICATORS - Below everything
+   ============================================ */
+
+.hero-indicators {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 12px;
+  z-index: 10;
+  pointer-events: auto;
+}
+
+.current-page-indicator {
+  position: absolute;
+  bottom: 2rem;
+  right: 2.5rem;
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* ============================================
+   IMAGE TRANSITIONS - Synchronized
+   ============================================ */
+
+.hero-slide-current.exiting {
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 2800ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hero-slide-next.entering {
+  z-index: 3;
+  opacity: 1;
+  transition: opacity 2800ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hero-slide-next {
+  opacity: 0;
+  z-index: 1;
+}
+
+.hero-slide-current {
+  opacity: 1;
+  z-index: 2;
+}
+
+/* ============================================
+   INDICATOR PROGRESS
+   ============================================ */
+
+.indicator {
+  width: 40px;
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  border: none;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.3s ease;
+}
+
+.indicator:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.indicator.active {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.indicator-progress {
+  display: block;
+  height: 100%;
+  background: var(--primary-light);
+  border-radius: 2px;
+  width: 0%;
+}
+
+.indicator.active .indicator-progress {
+  animation: progressFill 10s linear forwards;
+}
+
+@keyframes progressFill {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}
+
+/* ============================================
+   KEN BURNS MOTIONS - Continuous
+   ============================================ */
+
+.motion-pan-right {
+  animation: panRight 22s linear forwards;
+}
+
+@keyframes panRight {
+  0% { transform: scale(1.02) translate3d(0, 0, 0); }
+  100% { transform: scale(1.10) translate3d(-3%, 0, 0); }
+}
+
+.motion-pan-left {
+  animation: panLeft 22s linear forwards;
+}
+
+@keyframes panLeft {
+  0% { transform: scale(1.02) translate3d(0, 0, 0); }
+  100% { transform: scale(1.10) translate3d(3%, 0, 0); }
+}
+
+.motion-zoom-center {
+  animation: zoomCenter 22s linear forwards;
+}
+
+@keyframes zoomCenter {
+  0% { transform: scale(1.02) translate3d(0, 0, 0); }
+  100% { transform: scale(1.10) translate3d(0, 0, 0); }
+}
+
+.motion-pan-diagonal {
+  animation: panDiagonal 22s linear forwards;
+}
+
+@keyframes panDiagonal {
+  0% { transform: scale(1.02) translate3d(0, 0, 0); }
+  100% { transform: scale(1.10) translate3d(-2%, -1%, 0); }
+}
+
+/* ============================================
+   REDUCED MOTION
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .entry-bottom-up,
+  .entry-bottom-up-delayed {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  
+  .text-exiting .hero-title,
+  .text-exiting .banner-title,
+  .text-exiting .hero-description,
+  .text-exiting .banner-description {
+    animation: none !important;
+    opacity: 0 !important;
+    transform: none !important;
+  }
+  
+  .text-entering .hero-title,
+  .text-entering .banner-title,
+  .text-entering .hero-description,
+  .text-entering .banner-description {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  
+  .hero-slide-image {
+    animation: none !important;
+    transform: scale(1) !important;
+  }
+  
+  .indicator.active .indicator-progress {
+    animation: none !important;
+    width: 100% !important;
   }
 }
